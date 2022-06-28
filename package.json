@@ -1,37 +1,37 @@
 {
-	"name": "react-chakra-ui-template",
-	"private": true,
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"preview": "vite preview"
-	},
-	"dependencies": {
-		"@chakra-ui/icons": "^2.0.0",
-		"@chakra-ui/react": "^2.0.2",
-		"@emotion/react": "^11",
-		"@emotion/styled": "^11",
-		"axios": "^0.27.2",
-		"luxon": "^1.11.2",
-		"framer-motion": "^6",
-		"html-react-parser": "^1.4.12",
-		"jotai": "^1.6.7",
-		"react": "^18.0.0",
-		"react-dom": "^18.0.0",
-		"react-helmet": "^6.1.0",
-		"formik": "^7.31.1",
-		"react-icons": "^4.3.1",
-		"react-query": "^3.39.0",
-		"react-router-dom": "6",
-		"vite-tsconfig-paths": "^3.4.1"
-	},
-	"devDependencies": {
-		"@testing-library/react": "^13.2.0",
-		"@types/react": "^18.0.0",
-		"@types/react-dom": "^18.0.0",
-		"@vitejs/plugin-react": "^1.3.0",
-		"typescript": "^4.6.3",
-		"vite": "^2.9.7"
-	}
+  "name": "apoinment-medical-app",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.0",
+    "@chakra-ui/react": "^2.0.2",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "axios": "^0.27.2",
+    "luxon": "^1.11.2",
+    "framer-motion": "^6",
+    "html-react-parser": "^1.4.12",
+    "jotai": "^1.6.7",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-helmet": "^6.1.0",
+    "formik": "^7.31.1",
+    "react-icons": "^4.3.1",
+    "react-query": "^3.39.0",
+    "react-router-dom": "6",
+    "vite-tsconfig-paths": "^3.4.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.2.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.0",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.7"
+  }
 }
