@@ -8,9 +8,13 @@ import {
 } from 'react-router-dom';
 import { privateRoutes } from './dashboard.routes';
 import { publicRoutes } from './routes';
+import { useAuth } from 'hooks';
 
 export const AppRouter = () => {
-  const isAuthenticated = true;
+  const { checking, isAuthenticated } = useAuth();
+
+  if (checking) return <h2>Cargando...</h2>;
+
   return (
     <BrowserRouter>
       <Routes>

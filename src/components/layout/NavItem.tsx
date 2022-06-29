@@ -1,5 +1,5 @@
 import { Flex, FlexProps, Icon } from '@chakra-ui/react';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
 import { NavLink } from 'react-router-dom';
 
@@ -9,17 +9,9 @@ interface NavItemProps extends FlexProps {
   to: string;
 }
 export const NavItem = ({ icon, children, to, ...rest }: NavItemProps) => {
-  const [isActive, setActive] = useState(false);
   return (
-    <NavLink
-      to={to}
-      style={({ isActive }) => {
-        setActive(isActive);
-        return {};
-      }}>
+    <NavLink to={to}>
       <Flex
-        bg={isActive ? 'cyan.400' : ''}
-        color={isActive ? 'white' : ''}
         align='center'
         p='4'
         mx='4'

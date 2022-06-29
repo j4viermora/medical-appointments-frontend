@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const apiNameProject = axios.create({
-	baseURL: 'http://localhost:3333',
-	headers: {
-		Authorization: 'Bearer ' + localStorage.getItem('token'),
-	},
+export const appRequest = axios.create({
+  baseURL: 'http://localhost:4000/api/v1',
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('auth-token'),
+  },
 });

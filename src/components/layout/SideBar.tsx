@@ -23,11 +23,12 @@ interface LinkItemProps {
   to: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome, to: '/app' },
-  { name: 'Trending', icon: FiTrendingUp, to: '/app/products' },
-  { name: 'Explore', icon: FiCompass, to: '/app/contacts' },
-  { name: 'Favourites', icon: FiStar, to: '/app/categories' },
-  { name: 'Settings', icon: FiSettings, to: '/app/profile' },
+  { name: 'Inicio', icon: FiHome, to: '/app' },
+  { name: 'Citas', icon: FiCompass, to: '/app/contacts' },
+  { name: 'Pacientes', icon: FiSettings, to: '/app/patients' },
+  { name: 'Doctores', icon: FiTrendingUp, to: '/app/products' },
+  { name: 'Consultorio', icon: FiStar, to: '/app/categories' },
+  { name: 'Perfil', icon: FiSettings, to: '/app/profile' },
 ];
 
 interface SidebarProps extends BoxProps {

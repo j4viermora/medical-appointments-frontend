@@ -1,6 +1,7 @@
 import { IRoute } from 'interfaces';
-import { DemoPage } from 'pages';
+import { Home, Profile } from 'pages/app';
 
 export const privateRoutes: IRoute[] = [
-  { component: DemoPage, name: 'Demo', path: '' },
+  { component: Home, name: 'Home', path: '' },
+  { component: Profile, name: 'Home', path: 'profile' },
 ];
