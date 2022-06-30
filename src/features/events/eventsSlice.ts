@@ -55,6 +55,7 @@ const initialState: IEventStore = {
 			status: false,
 			title: '',
 			updatedAt: '',
+			confirmationMessageSent: false,
 		},
 	],
 	hasNextPage: false,
@@ -75,6 +76,9 @@ const eventsSlice = createSlice({
 		setEvents: (state, action: PayloadAction<IEventStore>) => {
 			state.events = action.payload.events;
 			state.hasNextPage = action.payload.hasNextPage;
+			state.hasPrevPage = action.payload.hasPrevPage;
+			state.totalDocs = action.payload.totalDocs;
+			state.totalPages = action.payload.totalPages;
 		},
 	},
 });

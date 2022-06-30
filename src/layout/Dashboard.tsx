@@ -17,11 +17,12 @@ import {
 	MenuItem,
 	MenuList,
 } from '@chakra-ui/react';
-import { FiMenu, FiBell, FiChevronDown } from 'react-icons/fi';
+import { FiMenu, FiChevronDown } from 'react-icons/fi';
 import { SidebarContent } from 'components/layout/SideBar';
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/store';
+import { useAuth } from 'hooks';
 
 export function SidebarWithHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +39,7 @@ export function SidebarWithHeader() {
 				onClose={onClose}
 				returnFocusOnClose={false}
 				onOverlayClick={onClose}
-				size='full'
+				size='xs'
 			>
 				<DrawerContent>
 					<SidebarContent onClose={onClose} />
@@ -60,6 +61,7 @@ interface MobileProps extends FlexProps {
 	onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+	const { logout } = useAuth();
 	const { name, lastName } = useSelector(
 		(state: RootState) => state.session.user
 	);
@@ -140,7 +142,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 							{/* <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem> */}
 							<MenuDivider />
-							<MenuItem>Salir</MenuItem>
+							<MenuItem onClick={logout}>Salir</MenuItem>
 						</MenuList>
 					</Menu>
 				</Flex>

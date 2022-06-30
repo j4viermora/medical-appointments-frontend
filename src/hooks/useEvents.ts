@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 export const useEvents = () => {
 	const [isLoading, setLoading] = useState(true);
 	const { _id } = useSelector((state: RootState) => state.session.company);
-	const { events } = useSelector((state: RootState) => state.events);
+	const { events, ...rest } = useSelector((state: RootState) => state.events);
 	const dispatch = useDispatch();
+
+	const getEvents = async () => {
+		const result = await getEventByCompany({ companyId: _id });
+		return result;
+	};
 
 	useEffect(() => {
 		getEventByCompany({ companyId: _id })
@@ -34,5 +39,6 @@ export const useEvents = () => {
 	return {
 		isLoading,
 		events,
+		metadata: rest,
 	};
 };

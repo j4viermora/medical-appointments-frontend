@@ -10,6 +10,10 @@ export function useAuth() {
 	const [checking, setChecking] = useState(true);
 	const { isLogged } = useSelector((state: RootState) => state.session);
 	const token = localStorage.getItem('auth-token') || '';
+	const logout = () => {
+		window.localStorage.clear();
+		window.location.href = '/';
+	};
 
 	useEffect(() => {
 		if (checking && token.length !== 0) {
@@ -39,5 +43,6 @@ export function useAuth() {
 	return {
 		checking,
 		isAuthenticated: isLogged,
+		logout,
 	};
 }
