@@ -1,11 +1,12 @@
-import {Dashboard} from 'layout';
-import {Routes, Route, Navigate, Outlet} from 'react-router-dom';
-import {privateRoutes} from './dashboard.routes';
-import {publicRoutes} from './routes';
-import {useAuth} from 'hooks';
+import { Dashboard } from 'layout';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { privateRoutes } from './dashboard.routes';
+import { publicRoutes } from './routes';
+import { useAuth } from 'hooks';
 
 export const AppRouter = () => {
-	const {checking, isAuthenticated} = useAuth();
+	const { checking, isAuthenticated } = useAuth();
+	console.log(checking);
 	if (checking) return <h2>Cargando...</h2>;
 
 	return (
@@ -16,7 +17,7 @@ export const AppRouter = () => {
 					isAuthenticated ? <Dashboard /> : <Navigate to='/auth/login' />
 				}
 			>
-				{privateRoutes.map(({path, component: Component, name}) => (
+				{privateRoutes.map(({ path, component: Component, name }) => (
 					<Route key={name} path={path} element={<Component />} />
 				))}
 			</Route>
@@ -24,7 +25,7 @@ export const AppRouter = () => {
 				path='/auth'
 				element={isAuthenticated ? <Navigate to='/app' /> : <Outlet />}
 			>
-				{publicRoutes.map(({path, name, component: Component}) => (
+				{publicRoutes.map(({ path, name, component: Component }) => (
 					<Route key={name} path={path} element={<Component />} />
 				))}
 			</Route>

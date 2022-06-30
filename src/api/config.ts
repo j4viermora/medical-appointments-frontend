@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
+
 export const appRequest = axios.create({
-  baseURL: 'http://localhost:4000/api/v1',
-  headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('auth-token'),
-  },
+	baseURL,
+	headers: {
+		Authorization: 'Bearer ' + localStorage.getItem('auth-token'),
+	},
 });
