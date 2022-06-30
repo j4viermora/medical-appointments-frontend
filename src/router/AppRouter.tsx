@@ -3,11 +3,12 @@ import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { privateRoutes } from './dashboard.routes';
 import { publicRoutes } from './routes';
 import { useAuth } from 'hooks';
+import { Spinner } from 'components/shared';
 
 export const AppRouter = () => {
 	const { checking, isAuthenticated } = useAuth();
 	console.log(checking);
-	if (checking) return <h2>Cargando...</h2>;
+	if (checking) return <Spinner />;
 
 	return (
 		<Routes>

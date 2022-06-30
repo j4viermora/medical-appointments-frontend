@@ -1,40 +1,12 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Progress, Icon } from '@chakra-ui/react';
 import { EventItem } from 'components/home/cards';
-import { getEventByCompany } from 'api';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'app/store';
-import { useEffect, useState } from 'react';
-import { setEvents } from 'features/events/eventsSlice';
+import { useEvents } from 'hooks/useEvents';
+import { MdOutlineAdd } from 'react-icons/md';
+import { IconButton } from '@chakra-ui/react';
 
 export const Home = () => {
-	const [isLoading, setLoading] = useState(true);
-	const { _id } = useSelector((state: RootState) => state.session.company);
-	const { events } = useSelector((state: RootState) => state.events);
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		getEventByCompany({ companyId: _id })
-			.then(({ data }) => {
-				dispatch(
-					setEvents({
-						events: data.data.docs,
-						hasNextPage: data.data.hasNextPage,
-						hasPrevPage: data.data.hasPrevPage,
-						nextPage: data.data.nextPage,
-						limit: data.data.limit,
-						page: data.data.page,
-						pagingCounter: data.data.pagingCounter,
-						prevPage: data.data.prevPage,
-						totalDocs: data.data.totalDocs,
-						totalPages: data.data.totalPages,
-					})
-				);
-			})
-			.catch((err) => console.log(err.response))
-			.finally(() => setLoading(false));
-	}, []);
-
-	if (isLoading) return <h2>Loading...</h2>;
+	const { isLoading, events } = useEvents();
+	if (isLoading) return <Progress size='xs' isIndeterminate />;
 
 	return (
 		<Box>
@@ -44,10 +16,31 @@ export const Home = () => {
 				</Heading>
 			</Box>
 
-			<Box>
+			<Box display='flex' flexWrap={'wrap'} gap='5' justifyContent='center'>
 				{events.map((item) => (
 					<EventItem key={item._id} {...item}></EventItem>
 				))}
+			</Box>
+
+			<Box
+				position='fixed'
+				bottom={5}
+				right={5}
+				w='50px'
+				h='50px'
+				display='flex'
+				justifyContent='center'
+				alignItems='center'
+			>
+				<IconButton
+					shadow='lg'
+					rounded={'full'}
+					icon={<MdOutlineAdd size={30} />}
+					bg='blue.400'
+					colorScheme={'blue'}
+					aria-label='Add event'
+					size='lg'
+				/>
 			</Box>
 		</Box>
 	);

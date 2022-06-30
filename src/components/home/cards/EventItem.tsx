@@ -6,11 +6,19 @@ import {
 	Stack,
 	Text,
 	useColorModeValue,
+	Tag,
+	Box,
+	Flex,
 } from '@chakra-ui/react';
 import { IEvent } from 'interfaces/events.interfaces';
 import { DateTime } from 'luxon';
 
-export function EventItem({ patient, description, dateEvent }: IEvent) {
+export function EventItem({
+	patient,
+	description,
+	dateEvent,
+	confirmationMessageSent,
+}: IEvent) {
 	const { name, lastName, phone, city, dni } = patient;
 	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
 
@@ -25,12 +33,13 @@ export function EventItem({ patient, description, dateEvent }: IEvent) {
 			<Stack
 				borderWidth='1px'
 				borderRadius='lg'
-				w={{ sm: '100%', md: '540px' }}
+				w={{ sm: '100%', md: '400px' }}
 				height={{ sm: '476px', md: '20rem' }}
 				direction={{ base: 'column', md: 'row' }}
 				bg={useColorModeValue('white', 'gray.900')}
 				boxShadow={'2xl'}
-				padding={4}
+				paddingY={4}
+				paddingX={2}
 			>
 				{/* TODO - consider add client photo */}
 				{/* <Flex flex={1} bg='blue.200'>
@@ -60,33 +69,54 @@ export function EventItem({ patient, description, dateEvent }: IEvent) {
 						textAlign={'center'}
 						color={useColorModeValue('gray.700', 'gray.400')}
 						px={3}
+						textOverflow='ellipsis'
 					>
 						{description}
 					</Text>
 					<Stack
 						align={'center'}
-						justify={'center'}
+						justify={'space-around'}
 						flexWrap='wrap'
 						gap={'2'}
 						direction={'row'}
 						mt={6}
 					>
-						<Badge
-							px={2}
-							py={1}
-							bg={useColorModeValue('gray.50', 'gray.800')}
-							fontWeight={'400'}
-						>
-							{city}
-						</Badge>
-						<Badge
-							px={2}
-							py={1}
-							bg={useColorModeValue('gray.50', 'gray.800')}
-							fontWeight={'400'}
-						>
-							{dni}
-						</Badge>
+						<Flex gap='2'>
+							<Box as='span' fontWeight='bold'>
+								Dirección:
+							</Box>
+							<Badge
+								px={2}
+								py={1}
+								bg={useColorModeValue('gray.50', 'gray.800')}
+								fontWeight={'400'}
+							>
+								{city}
+							</Badge>
+						</Flex>
+						<Flex gap='2'>
+							<Box as='span' fontWeight='bold'>
+								C.I:
+							</Box>
+							<Badge
+								px={2}
+								py={1}
+								bg={useColorModeValue('gray.50', 'gray.800')}
+								fontWeight={'400'}
+							>
+								{dni}
+							</Badge>
+						</Flex>
+						<Box display={'flex'} gap='2'>
+							<Box fontWeight='bold'>Mensaje:</Box>
+							<Tag
+								bg={confirmationMessageSent ? 'green.400' : 'red.400'}
+								color={'white'}
+							>
+								{confirmationMessageSent ? 'Enviado' : 'No enviado'}
+							</Tag>
+						</Box>
+
 						<Badge
 							px={2}
 							py={1}

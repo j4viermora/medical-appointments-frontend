@@ -34,6 +34,7 @@ export interface IEvent {
 	state: string;
 	paymentState: string;
 	observations: string;
+	confirmationMessageSent: boolean;
 	createdBy: string;
 	createdAt: string;
 	updatedAt: string;
