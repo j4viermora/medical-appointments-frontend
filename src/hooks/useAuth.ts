@@ -1,28 +1,39 @@
-import { refresh } from 'api';
-import { useEffect, useState } from 'react';
-import { useSession } from 'store/sessionAtom';
+import {refresh} from 'api';
+import {useEffect, useState} from 'react';
+// import { useSession } from 'store/sessionAtom';
+import {useSelector, useDispatch} from 'react-redux';
+import {RootState} from 'app/store';
+import {setSession} from 'features/session/sessionSlice';
 
 export function useAuth() {
-  const [checking, setChecking] = useState(true);
-  const { session, setSession } = useSession();
-  const token = localStorage.getItem('auth-token') || '';
+	const dispatch = useDispatch();
+	const [checking, setChecking] = useState(true);
+	// const { session, setSession } = useSession();
+	const {isLogged} = useSelector((state: RootState) => state.session);
+	const token = localStorage.getItem('auth-token') || '';
 
-  useEffect(() => {
-    if (checking && token.length !== 0) {
-      refresh().then(({ data: { company, token, user } }) => {
-        setSession({
-          company,
-          token,
-          user,
-          isLogged: true,
-        });
-        setChecking(false);
-      });
-    }
-  });
+	useEffect(() => {
+		if (checking && token.length !== 0) {
+			refresh()
+				.then(({data: {company, user}}) => {
+					dispatch(
+						setSession({
+							company,
+							// token,
+							user,
+							isLogged: true,
+						})
+					);
+				})
+				.catch(() => {
+					window.alert('Opss algo salio mal');
+				})
+				.finally(() => setChecking(false));
+		}
+	});
 
-  return {
-    checking,
-    isAuthenticated: session.isLogged,
-  };
+	return {
+		checking,
+		isAuthenticated: isLogged,
+	};
 }

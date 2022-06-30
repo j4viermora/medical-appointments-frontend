@@ -11,9 +11,10 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { login } from 'api';
-import { useSession } from 'store/sessionAtom';
-import { ILoginResponse } from 'interfaces/routes.interfaces';
+import { ILoginResponse } from 'interfaces';
 import { AxiosResponse } from 'axios';
+import { setSession } from 'features/session/sessionSlice';
+import { useDispatch } from 'react-redux';
 
 export const LoginForm = () => {
   //delete email, only development
@@ -21,7 +22,7 @@ export const LoginForm = () => {
   const [email, setEmail] = useState(isPrevEmail);
   const [password, setPassword] = useState('12345678');
   const [remember, setRemember] = useState(false);
-  const { setSession, session } = useSession();
+  const dispatch = useDispatch();
 
   function onSubmit(e: any) {
     e.preventDefault();
@@ -34,12 +35,15 @@ export const LoginForm = () => {
 
     const sucessFunc = ({ data }: AxiosResponse<ILoginResponse, any>) => {
       window.localStorage.setItem('auth-token', data.token);
-      setSession({
-        company: data.company,
-        user: data.user,
-        token: data.token,
-        isLogged: true,
-      });
+      dispatch(
+        setSession({
+          company: data.company,
+          user: data.user,
+          // token: data.token,
+          isLogged: true,
+        })
+      );
+
       return 'Login exitoso';
     };
 
