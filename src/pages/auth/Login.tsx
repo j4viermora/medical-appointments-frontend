@@ -1,25 +1,30 @@
-import { Flex, Box, Stack, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Box, Heading, useColorModeValue } from '@chakra-ui/react';
 import { LoginForm } from 'components/login/LoginForm';
+// import { Link } from 'react-router-dom';
 
 export function LoginPage() {
-  return (
-    <Flex
-      minH={'100vh'}
-      align={'center'}
-      justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}>
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-        <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Inicio de sesión</Heading>
-        </Stack>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={5}>
-          <LoginForm />
-        </Box>
-      </Stack>
-    </Flex>
-  );
+	return (
+		<Flex
+			direction='column'
+			h='80vh'
+			justifyContent='center'
+			alignItems='center'
+			bg={useColorModeValue('gray.50', 'gray.800')}
+			paddingX='10px'
+		>
+			<Box
+				maxW={'600px'}
+				minW='400px'
+				rounded={'lg'}
+				bg={useColorModeValue('white', 'gray.700')}
+				boxShadow={'lg'}
+				p={5}
+			>
+				<Heading textAlign='center' fontSize={'3xl'}>
+					Inicio de sesión
+				</Heading>
+				<LoginForm />
+			</Box>
+		</Flex>
+	);
 }

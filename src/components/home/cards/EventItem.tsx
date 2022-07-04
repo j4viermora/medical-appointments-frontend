@@ -10,6 +10,7 @@ import {
 	Box,
 	Flex,
 } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { IEvent } from 'interfaces/events.interfaces';
 import { DateTime } from 'luxon';
 
@@ -18,15 +19,20 @@ export function EventItem({
 	description,
 	dateEvent,
 	confirmationMessageSent,
+	_id,
 }: IEvent) {
 	const { name, lastName, phone, city, dni } = patient;
 	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
+	const whatsappMessage = encodeURI(
+		`Hola ${name} ${lastName} este mensaje es para recordarte que para la fecha *${formatDate}* tiene su proxima cita. Si no podra asistir por alguna razon no dude en contactarnos. Saludos`
+	);
+	const whatsappUrl = `https://wa.me/${phone}?text=${whatsappMessage}`;
 
-	const sendMessageWhatsapp = () => {
-		const newWindow = window.open();
-		//@ts-ignore
-		newWindow.location.href = `https://wa.me/${phone}`;
-	};
+	// const sendMessageWhatsapp = () => {
+	// 	const newWindow = window.open();
+	// 	//@ts-ignore
+	// 	newWindow.location.href = whatsappUrl;
+	// };
 
 	return (
 		<Center py={6}>
@@ -136,7 +142,10 @@ export function EventItem({
 						alignItems={'center'}
 					>
 						<Button
-							onClick={sendMessageWhatsapp}
+							// onClick={sendMessageWhatsapp}
+							as={'a'}
+							href={whatsappUrl}
+							target='_blank'
 							flex={1}
 							fontSize={'sm'}
 							rounded={'full'}
@@ -147,6 +156,8 @@ export function EventItem({
 							Mensaje
 						</Button>
 						<Button
+							as={RouterLink}
+							to={`events/id/${_id}`}
 							flex={1}
 							fontSize={'sm'}
 							rounded={'full'}

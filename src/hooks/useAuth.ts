@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'app/store';
 import { setSession } from 'features/session/sessionSlice';
+import toast from 'react-hot-toast';
 
 export function useAuth() {
 	const dispatch = useDispatch();
@@ -29,8 +30,12 @@ export function useAuth() {
 					);
 				})
 				.catch((err) => {
-					console.log(JSON.stringify(err));
-					// window.alert('Opss algo salio mal');
+					if (err.response) {
+						err.response.data.msg === 'token no valido' &&
+							toast.error('No se pudo renovar el token');
+					} else {
+						return;
+					}
 				})
 				.finally(() => {
 					setChecking(false);
