@@ -5,6 +5,7 @@ import { IRoute } from 'interfaces';
 const DemoLazy = lazy(() => import('pages/DemoLazy'));
 const RegisterPage = lazy(() => import('pages/auth/Register'));
 const LoginPage = lazy(() => import('pages/auth/Login'));
+const FormikYup = lazy(() => import('pages/FormikYup'));
 
 export const publicRoutes: IRoute[] = [
 	{
@@ -21,5 +22,10 @@ export const publicRoutes: IRoute[] = [
 		name: 'formik',
 		component: DemoLazy,
 		path: 'formik',
+	},
+	{
+		name: 'Formik yup',
+		component: FormikYup,
+		path: 'formik-yup',
 	},
 ];

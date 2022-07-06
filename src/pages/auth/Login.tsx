@@ -6,7 +6,7 @@ export function LoginPage() {
 	return (
 		<Flex
 			direction='column'
-			h='80vh'
+			h='100vh'
 			justifyContent='center'
 			alignItems='center'
 			bg={useColorModeValue('gray.50', 'gray.800')}
@@ -14,7 +14,7 @@ export function LoginPage() {
 		>
 			<Box
 				maxW={'600px'}
-				minW='400px'
+				minW='320px'
 				rounded={'lg'}
 				bg={useColorModeValue('white', 'gray.700')}
 				boxShadow={'lg'}
