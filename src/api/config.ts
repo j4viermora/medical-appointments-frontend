@@ -2,9 +2,15 @@ import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_APP_BASE_URL;
 
+const token = localStorage.getItem('auth-token') || '';
+
 export const appRequest = axios.create({
 	baseURL,
 	headers: {
-		Authorization: 'Bearer ' + localStorage.getItem('auth-token') || '',
+		Authorization: 'Bearer ' + token,
 	},
+});
+
+export const publicRequest = axios.create({
+	baseURL,
 });

@@ -23,9 +23,16 @@ import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/store';
 import { useAuth } from 'hooks';
+import { useEffect } from 'react';
 
 export function SidebarWithHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { refreshToken, checking } = useAuth();
+
+	useEffect(() => {
+		refreshToken();
+	}, []);
+
 	return (
 		<Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
 			<SidebarContent
@@ -48,7 +55,7 @@ export function SidebarWithHeader() {
 			{/* mobilenav */}
 			<MobileNav onOpen={onOpen} />
 			<Box ml={{ base: 0, md: 60 }} p='4'>
-				<Outlet />
+				{checking ? 'loading..' : <Outlet />}
 				{/* componente de react router dom  */}
 			</Box>
 		</Box>

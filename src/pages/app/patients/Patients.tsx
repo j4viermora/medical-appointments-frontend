@@ -1,108 +1,26 @@
-import { HamburgerIcon } from '@chakra-ui/icons';
-import {
-	Table,
-	TableContainer,
-	Thead,
-	Tr,
-	Th,
-	Tbody,
-	Td,
-	Menu,
-	MenuButton,
-	MenuList,
-	MenuItem,
-	Button,
-	Link,
-	Tooltip,
-	Text,
-	Divider,
-	Box,
-} from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Heading, Progress, Text, useDisclosure } from '@chakra-ui/react';
+import { PatientDataTable } from 'components/patients/datatables/PatientDataTable';
+import { AddPatientsModal } from 'components/patients/modals/AddPatients';
 import { Card, CustomFAB } from 'components/shared';
-import { IPatient } from 'interfaces';
-import { useEffect, useState } from 'react';
-import { getPatiens } from 'api';
+import { usePatients } from 'hooks/usePatients';
 
 export const Patients = () => {
-	const [loading, setLoading] = useState<boolean>(true);
-	const [patients, setPatients] = useState<IPatient[]>();
-	const [state, setState] = useState(false);
-
-	useEffect(() => {
-		getPatiens({ limit: 10 })
-			.then(({ data }) => {
-				console.log(data);
-				setPatients(data.data.docs);
-			})
-			.catch((err) => {
-				return;
-			})
-			.finally(() => setLoading(false));
-	}, []);
-
-	if (loading)
-		return (
-			<h2>
-				loading..{' '}
-				<Button colorScheme={'blue'} onClick={() => setState(!state)}>
-					{state ? 'true' : 'false'}
-				</Button>
-			</h2>
-		);
+	const { isLoading, patients, metadata } = usePatients();
+	const { isOpen, onClose, onOpen } = useDisclosure();
+	const { totalDocs } = metadata;
+	if (isLoading) return <Progress size='xs' isIndeterminate />;
 
 	return (
 		<>
 			<Card>
-				<TableContainer>
-					<Table variant='simple'>
-						<Thead>
-							<Tr>
-								<Th>Nombre</Th>
-								<Th>Telefono</Th>
-								<Th>Acciones</Th>
-							</Tr>
-						</Thead>
-						<Tbody>
-							{patients?.map((patient) => (
-								<Tr key={patient._id}>
-									<Td>
-										<Link
-											as={RouterLink}
-											to={`patient/id/${patient._id}`}
-											fontSize={'sm'}
-										>
-											{patient.name}
-										</Link>
-									</Td>
-									<Td>
-										<Tooltip label='Dando click puedes hacer aqui llamada'>
-											<Link fontSize='sm' href='tel:+584128786953'>
-												{patient.phone}
-											</Link>
-										</Tooltip>
-									</Td>
-									<Td>
-										<Menu>
-											<MenuButton as={Button} size='sm' colorScheme='blue'>
-												<HamburgerIcon />
-											</MenuButton>
-											<MenuList>
-												<MenuItem>Ver mas</MenuItem>
-												<MenuItem>Crear cita</MenuItem>
-												<MenuItem>Llamar</MenuItem>
-												<MenuItem>Editar</MenuItem>
-												<MenuItem>Eliminar</MenuItem>
-											</MenuList>
-										</Menu>
-									</Td>
-								</Tr>
-							))}
-						</Tbody>
-					</Table>
-				</TableContainer>
+				<Heading fontSize={'lg'}>Pacientes</Heading>
 			</Card>
-			<CustomFAB onClick={() => console.log('hoal')} />
+			<Card>
+				<Text>Total de pacientes: {totalDocs}</Text>
+			</Card>
+			<PatientDataTable patients={patients} />
+			<AddPatientsModal isOpen={isOpen} onClose={onClose} />
+			<CustomFAB onClick={onOpen} />
 		</>
 	);
 };

@@ -1,9 +1,10 @@
+import { AxiosResponse } from 'axios';
 import { IListPatientsResponse, ILoginResponse } from 'interfaces';
 import { IEventsResponse } from 'interfaces/events.interfaces';
-import { appRequest } from './config';
+import { appRequest, publicRequest } from './config';
 
 export const login = async (data: { password: string; email: string }) => {
-	return appRequest.post<ILoginResponse>('/auth/login', data);
+	return publicRequest.post<ILoginResponse>('/auth/login', data);
 };
 
 export const refresh = async () => {
@@ -26,7 +27,7 @@ export const getEventByCompany = async ({
 	page?: number | string;
 	doctor?: string;
 	companyId: string;
-}) => {
+}): Promise<AxiosResponse<IEventsResponse, any>> => {
 	const resp = appRequest.get<IEventsResponse>(
 		`/events/company/id/${companyId}`,
 		{

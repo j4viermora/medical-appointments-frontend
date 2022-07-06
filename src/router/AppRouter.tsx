@@ -1,48 +1,36 @@
 import { Dashboard } from 'layout';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet, HashRouter } from 'react-router-dom';
 import { privateRoutes } from './dashboard.routes';
 import { publicRoutes } from './routes';
-import { useAuth } from 'hooks';
 import { Spinner } from 'components/shared';
 import { Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/store';
 
 export const AppRouter = () => {
-	const { checking, isAuthenticated } = useAuth();
-	if (checking) return <Spinner />;
-
+	const { isLogged } = useSelector((state: RootState) => state.session);
 	return (
-		<Suspense fallback={<h2>Loading..</h2>}>
-			<Routes>
-				<Route
-					path='/app'
-					element={
-						isAuthenticated ? <Dashboard /> : <Navigate to='/auth/login' />
-					}
-				>
-					{privateRoutes.map(({ path, component: Component, name }) => (
-						<Route key={name} path={path} element={<Component />} />
-					))}
-				</Route>
-
-				<Route
-					path='/auth'
-					element={isAuthenticated ? <Navigate to='/app' /> : <Outlet />}
-				>
-					{publicRoutes.map(({ path, name, component: Component }) => (
-						<Route key={name} path={path} element={<Component />} />
-					))}
-				</Route>
-				<Route
-					path='*'
-					element={
-						isAuthenticated ? (
-							<Navigate to='/app' />
-						) : (
-							<Navigate to='/auth/login' />
-						)
-					}
-				/>
-			</Routes>
-		</Suspense>
+		<HashRouter>
+			<Suspense fallback={<Spinner />}>
+				<Routes>
+					<Route path='/app' element={<Dashboard />}>
+						{privateRoutes.map(({ path, component: Component, name }) => (
+							<Route key={name} path={path} element={<Component />} />
+						))}
+					</Route>
+					<Route path='/auth' element={<Outlet />}>
+						{publicRoutes.map(({ path, name, component: Component }) => (
+							<Route key={name} path={path} element={<Component />} />
+						))}
+					</Route>
+					<Route
+						path='*'
+						element={
+							isLogged ? <Navigate to='/app' /> : <Navigate to='/auth/login' />
+						}
+					/>
+				</Routes>
+			</Suspense>
+		</HashRouter>
 	);
 };

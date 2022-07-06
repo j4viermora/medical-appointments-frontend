@@ -7,7 +7,7 @@ import {
 	Input,
 	Stack,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { login } from 'api';
@@ -34,16 +34,16 @@ export const LoginForm = () => {
 		}
 
 		const sucessFunc = ({ data }: AxiosResponse<ILoginResponse, any>) => {
-			window.localStorage.setItem('auth-token', data.token);
+			localStorage.setItem('auth-token', data.token);
 			dispatch(
 				setSession({
 					company: data.company,
 					user: data.user,
-					// token: data.token,
 					isLogged: true,
 				})
 			);
 
+			location.href = '/#/app';
 			return 'Login exitoso';
 		};
 
