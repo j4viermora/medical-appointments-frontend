@@ -1,7 +1,7 @@
 import { getEventByCompany } from 'api';
 import { RootState } from 'app/store';
 import { setEvents } from 'features/events/eventsSlice';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useEvents = () => {
@@ -10,12 +10,7 @@ export const useEvents = () => {
 	const { events, ...rest } = useSelector((state: RootState) => state.events);
 	const dispatch = useDispatch();
 
-	const getEvents = async () => {
-		const result = await getEventByCompany({ companyId: _id });
-		return result;
-	};
-
-	useEffect(() => {
+	const getEvents = useCallback(() => {
 		getEventByCompany({ companyId: _id })
 			.then(({ data }) => {
 				dispatch(
@@ -35,6 +30,10 @@ export const useEvents = () => {
 			})
 			.catch((err) => console.log(err.response))
 			.finally(() => setLoading(false));
+	}, []);
+
+	useEffect(() => {
+		getEvents();
 	}, []);
 	return {
 		isLoading,

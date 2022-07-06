@@ -6,7 +6,7 @@ import { FABcreateEvent } from 'components/home/buttons';
 import { useEvents } from 'hooks/useEvents';
 
 export const Home = () => {
-	const { isLoading, events } = useEvents();
+	const { events, isLoading } = useEvents();
 	if (isLoading) return <Progress size='xs' isIndeterminate />;
 
 	return (

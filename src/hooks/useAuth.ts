@@ -1,6 +1,5 @@
 import { refresh } from 'api';
 import { useEffect, useState } from 'react';
-// import { useSession } from 'store/sessionAtom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'app/store';
 import { setSession } from 'features/session/sessionSlice';
@@ -17,13 +16,12 @@ export function useAuth() {
 	};
 
 	useEffect(() => {
-		if (checking && token.length !== 0) {
+		if (checking && token.length > 0) {
 			refresh()
 				.then(({ data: { company, user } }) => {
 					dispatch(
 						setSession({
 							company,
-							// token,
 							user,
 							isLogged: true,
 						})

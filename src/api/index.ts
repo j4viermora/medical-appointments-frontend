@@ -1,4 +1,4 @@
-import { ILoginResponse } from 'interfaces';
+import { IListPatientsResponse, ILoginResponse } from 'interfaces';
 import { IEventsResponse } from 'interfaces/events.interfaces';
 import { appRequest } from './config';
 
@@ -37,6 +37,31 @@ export const getEventByCompany = async ({
 				from,
 				to,
 				includeInactive,
+			},
+		}
+	);
+
+	return resp;
+};
+
+type IGetPatiensParams = {
+	limit?: number | string;
+	page?: number | string;
+	sort?: number | string;
+};
+
+export const getPatiens = async ({
+	limit = 15,
+	page = 1,
+	sort = 'desc',
+}: IGetPatiensParams) => {
+	const resp = appRequest.get<IListPatientsResponse>(
+		'/contacts/list-contact/62ae5174312983efc4ecf1f7?kind=client',
+		{
+			params: {
+				limit,
+				page,
+				sort,
 			},
 		}
 	);
