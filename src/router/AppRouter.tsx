@@ -7,7 +7,6 @@ import { Spinner } from 'components/shared';
 
 export const AppRouter = () => {
 	const { checking, isAuthenticated } = useAuth();
-	console.log(checking);
 	if (checking) return <Spinner />;
 
 	return (

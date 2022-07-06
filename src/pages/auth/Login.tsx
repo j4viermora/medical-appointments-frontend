@@ -28,3 +28,5 @@ export function LoginPage() {
 		</Flex>
 	);
 }
+
+export default LoginPage;
