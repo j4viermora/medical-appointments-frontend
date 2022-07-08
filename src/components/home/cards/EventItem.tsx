@@ -40,7 +40,7 @@ export function EventItem({
 				borderWidth='1px'
 				borderRadius='lg'
 				w={{ sm: '100%', md: '400px' }}
-				height={{ sm: '476px', md: '20rem' }}
+				height={{ sm: '476px', md: '15rem' }}
 				direction={{ base: 'column', md: 'row' }}
 				bg={useColorModeValue('white', 'gray.900')}
 				boxShadow={'2xl'}
@@ -58,26 +58,16 @@ export function EventItem({
 					/>
 				</Flex> */}
 				<Stack
-					flex={1}
 					flexDirection='column'
 					justifyContent='center'
 					alignItems='center'
 					p={1}
-					pt={2}
 				>
 					<Heading fontSize={'2xl'} fontFamily={'body'}>
 						{name} {lastName}
 					</Heading>
 					<Text fontWeight={600} color={'gray.500'} size='sm' mb={4}>
 						{phone}
-					</Text>
-					<Text
-						textAlign={'center'}
-						color={useColorModeValue('gray.700', 'gray.400')}
-						px={3}
-						textOverflow='ellipsis'
-					>
-						{description}
 					</Text>
 					<Stack
 						align={'center'}
@@ -148,7 +138,6 @@ export function EventItem({
 							target='_blank'
 							flex={1}
 							fontSize={'sm'}
-							rounded={'full'}
 							_focus={{
 								bg: 'gray.200',
 							}}
@@ -160,7 +149,6 @@ export function EventItem({
 							to={`events/id/${_id}`}
 							flex={1}
 							fontSize={'sm'}
-							rounded={'full'}
 							bg={'blue.400'}
 							color={'white'}
 							_hover={{

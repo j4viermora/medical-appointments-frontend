@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseURL = import.meta.env.VITE_APP_BASE_URL;
+// @ts-ignore
+const baseURL = import.meta.env.VITE_APP_API_URL;
 
 const token = localStorage.getItem('auth-token') || '';
 
@@ -14,3 +14,21 @@ export const appRequest = axios.create({
 export const publicRequest = axios.create({
 	baseURL,
 });
+
+// appRequest.interceptors.response.use(
+// 	(res) => ({ ...res, ok: true }),
+// 	(err) => {
+// 		if (!err.response) {
+// 			throw err;
+// 		}
+// 		const invalidStatusCodes = [401, 403];
+// 		if (
+// 			invalidStatusCodes.includes(err.status) &&
+// 			err.config.url !== '/auth/resfresh-token'
+// 		) {
+// 			window.location.reload();
+// 		} else {
+// 			throw err;
+// 		}
+// 	}
+// );

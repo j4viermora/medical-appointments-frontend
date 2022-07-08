@@ -1,48 +1,165 @@
-import { getPatiens as getPatientsFromApi } from 'api';
-import { RootState } from 'app/store';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useRef, useState } from 'react';
 import {
+	getPatiens as patientsFromApi,
+	getPatiensByDni,
+	registerPatients,
+	removePatient,
+} from 'api';
+import {
+	setMetadata,
 	setPatients,
 	setLoading,
-	setMetadata,
 } from 'features/patients/patientsSlice';
-import { useEffect } from 'react';
-import toast from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+	IPatienDataRegister,
+	IPatientForm,
+} from 'interfaces/patients.interfaces';
+import { ToastId, useToast } from '@chakra-ui/react';
 
 export const usePatients = () => {
-	const dispatch = useDispatch();
-	const { patients, isLoading, metadata } = useSelector(
-		(state: RootState) => state.patients
-	);
-	function handleLoading(state: boolean) {
-		dispatch(setLoading(state));
-	}
+	const {
+		patients: { patients, metadata, isLoading },
+		session: {
+			company: { _id: companyId, companyCode, ownerEmail },
+		},
+	} = useAppSelector((state) => state);
+	const countryCode = '+58';
 
-	function getPatients() {
-		getPatientsFromApi({ limit: 200 })
-			.then(({ data }) => {
-				const {
-					data: { docs, ...rest },
-				} = data;
-				dispatch(setPatients(docs));
-				dispatch(setMetadata(rest));
-			})
-			.catch((err) => {
-				console.log(err.response);
-				return toast.error('Opss algo salio mal al consultar los pacientes');
-			})
-			.finally(() => handleLoading(false));
-	}
+	const dispacth = useAppDispatch();
+	const toast = useToast();
+	const toastIdRef = useRef<ToastId>();
 
-	useEffect(() => {
-		getPatients();
-	}, []);
+	const loadingToast = () => {
+		toastIdRef.current = toast({ title: 'Cargando...' });
+	};
+
+	const addPatient = async (
+		form: IPatientForm,
+		onClose: () => void,
+		resetForm?: () => void
+	) => {
+		dispacth(setLoading(true));
+		const bodyResquest: IPatienDataRegister = {
+			...form,
+			phone: `${countryCode}${form.phone}`,
+			companyEmail: ownerEmail,
+			companyCode,
+			companyId,
+		};
+		try {
+			const { data } = await registerPatients(bodyResquest);
+			if (data.message !== 'El contacto ya se encuentra registrado') {
+				toast({
+					title: 'Paciente registrado',
+					description: 'Registro de paciente realizado correctamente',
+					status: 'success',
+					isClosable: true,
+				});
+				onClose();
+				resetForm && resetForm();
+				await getPatiens();
+			} else {
+				toast({
+					title: 'Este contacto ya se encuentra registrado',
+					status: 'info',
+					isClosable: true,
+				});
+			}
+		} catch (err) {
+			toast({
+				title: 'Opss algo salio',
+				description: 'Intente nuevamente para realizar el registro',
+				status: 'error',
+				isClosable: true,
+			});
+		} finally {
+			dispacth(setLoading(false));
+		}
+	};
+
+	const getPatiens = async () => {
+		dispacth(setLoading(true));
+		try {
+			const {
+				data: { data },
+			} = await patientsFromApi({ companyId });
+			const { docs, ...rest } = data;
+			console.log(docs);
+			dispacth(setPatients(docs));
+			dispacth(setMetadata(rest));
+		} catch (error: any) {
+			toast({
+				title: 'Opss algo anda mal',
+				description:
+					'Tuvimos problemas al consultar tu informacion intente nuevamente ',
+				status: 'warning',
+			});
+		} finally {
+			dispacth(setLoading(false));
+		}
+	};
+
+	const deletePatient = async (id: string) => {
+		loadingToast();
+		try {
+			await removePatient(id);
+			toast({
+				title: 'Exito',
+				description: 'Usuario eliminado correctamente',
+				status: 'success',
+				isClosable: true,
+			});
+		} catch (error: any) {
+			toast({
+				title: 'Opss!!',
+				description: 'Algo salio mal mientras se intentaba eliminar el usuario',
+				status: 'error',
+				isClosable: true,
+			});
+		} finally {
+			toastIdRef.current && toast.close(toastIdRef.current);
+		}
+	};
+
+	const searchPatients = async (dni: string): Promise<void> => {
+		dispacth(setLoading(true));
+		try {
+			const {
+				data: { data },
+			} = await getPatiensByDni(dni, companyId);
+			dispacth(setPatients([data]));
+		} catch (error) {
+			toast({
+				title: 'No se encontraron registros',
+				status: 'warning',
+			});
+			// toast({
+			// 	title: 'Opss!',
+			// 	description: 'Algo salio mal',
+			// 	status: 'error',
+			// });
+		} finally {
+			dispacth(setLoading(false));
+		}
+	};
+
+	// const goToNextPage = () => {
+	// 	getPatiens();
+	// };
+	// const goToPrevPage = () => {};
+	// const goToFirstPage = () => {};
 
 	return {
-		patients,
+		addPatient,
+		getPatiens,
+		deletePatient,
+		searchPatients,
+		// goToNextPage,
+		// goToPrevPage,
+		// goToFirstPage,
 		isLoading,
-		handleLoading,
-		getPatients,
+		patients,
 		metadata,
 	};
 };

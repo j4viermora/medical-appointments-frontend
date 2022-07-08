@@ -23,6 +23,7 @@ export const LoginForm = () => {
 	const [password, setPassword] = useState('12345678');
 	const [remember, setRemember] = useState(false);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	function onSubmit(e: any) {
 		e.preventDefault();
@@ -43,7 +44,7 @@ export const LoginForm = () => {
 				})
 			);
 
-			location.href = '/#/app';
+			navigate('/app', { replace: true });
 			return 'Login exitoso';
 		};
 

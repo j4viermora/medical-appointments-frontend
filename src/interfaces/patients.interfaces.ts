@@ -39,3 +39,26 @@ export interface IPatient {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export interface IPatienDataRegister {
+	name: string;
+	lastName: string;
+	city: string;
+	kind: string;
+	email: string;
+	dni: string;
+	phone: string;
+	companyEmail: string;
+	companyId: string;
+	companyCode: string;
+}
+
+export interface IPatientForm {
+	name: string;
+	lastName: string;
+	city: string;
+	kind: string;
+	email: string;
+	dni: string;
+	phone: string;
+}
