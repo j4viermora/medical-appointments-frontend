@@ -2,12 +2,13 @@ import axios from 'axios';
 // @ts-ignore
 const baseURL = import.meta.env.VITE_APP_API_URL;
 
-const token = localStorage.getItem('auth-token') || '';
+const token = localStorage.getItem('auth-token');
 
 export const appRequest = axios.create({
 	baseURL,
+	timeout: 5000,
 	headers: {
-		Authorization: 'Bearer ' + token,
+		authorization: 'Bearer ' + token,
 	},
 });
 

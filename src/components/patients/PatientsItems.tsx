@@ -58,7 +58,6 @@ export const PatientsItems = ({ patients, ...rest }: IProps) => {
 						bg='white'
 						mb='2'
 						rounded={'lg'}
-						{...rest}
 						key={_id}
 					>
 						<Flex justifyContent='space-between' alignItems='center'>

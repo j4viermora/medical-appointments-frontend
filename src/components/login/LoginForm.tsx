@@ -15,6 +15,7 @@ import { ILoginResponse } from 'interfaces';
 import { AxiosResponse } from 'axios';
 import { setSession } from 'features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
+import { appRequest } from 'api/config';
 
 export const LoginForm = () => {
 	//delete email, only development
@@ -43,6 +44,8 @@ export const LoginForm = () => {
 					isLogged: true,
 				})
 			);
+			//@ts-ignore
+			appRequest.defaults.headers['authorization'] = `Bearer ${data.token}`;
 
 			navigate('/app', { replace: true });
 			return 'Login exitoso';

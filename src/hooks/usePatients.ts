@@ -89,10 +89,10 @@ export const usePatients = () => {
 			dispacth(setPatients(docs));
 			dispacth(setMetadata(rest));
 		} catch (error: any) {
+			console.log(error);
 			toast({
 				title: 'Opss algo anda mal',
-				description:
-					'Tuvimos problemas al consultar tu informacion intente nuevamente ',
+				description: JSON.stringify(error.response),
 				status: 'warning',
 			});
 		} finally {
