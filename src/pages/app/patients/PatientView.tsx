@@ -66,8 +66,8 @@ export const PatientView = () => {
 		{
 			initialValues: patient,
 			enableReinitialize: true,
-			onSubmit: ({ _id, ...rest }) => {
-				updatePatient(_id, rest, onToggle);
+			onSubmit: ({ _id, name, lastName, phone, email, dni }) => {
+				updatePatient(_id, { name, lastName, phone, email, dni }, onToggle);
 			},
 			validationSchema,
 		}
