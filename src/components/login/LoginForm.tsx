@@ -5,9 +5,12 @@ import {
 	FormControl,
 	FormLabel,
 	Input,
+	InputGroup,
+	InputRightAddon,
 	Stack,
+	useDisclosure,
 } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { login } from 'api';
@@ -15,6 +18,7 @@ import { ILoginResponse } from 'interfaces';
 import { AxiosResponse } from 'axios';
 import { setSession } from 'features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 export const LoginForm = () => {
 	//delete email, only development
@@ -22,6 +26,7 @@ export const LoginForm = () => {
 	const [email, setEmail] = useState(isPrevEmail);
 	const [password, setPassword] = useState('12345678');
 	const [remember, setRemember] = useState(false);
+	const { isOpen, onToggle } = useDisclosure();
 	const dispatch = useDispatch();
 
 	function onSubmit(e: any) {
@@ -70,11 +75,17 @@ export const LoginForm = () => {
 			</FormControl>
 			<FormControl id='password'>
 				<FormLabel>Contraseña</FormLabel>
-				<Input
-					type='password'
-					value={password}
-					onChange={({ target: { value } }) => setPassword(value)}
-				/>
+				<InputGroup>
+					<Input
+						type={isOpen ? 'text' : 'password'}
+						value={password}
+						onChange={({ target: { value } }) => setPassword(value)}
+					/>
+					<InputRightAddon
+						onClick={onToggle}
+						children={isOpen ? <AiFillEyeInvisible /> : <AiFillEye />}
+					/>
+				</InputGroup>
 			</FormControl>
 			<Stack spacing={10}>
 				<Stack
