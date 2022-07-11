@@ -10,7 +10,7 @@ import {
 	Stack,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 import { login } from 'api';
@@ -19,6 +19,7 @@ import { AxiosResponse } from 'axios';
 import { setSession } from 'features/session/sessionSlice';
 import { useDispatch } from 'react-redux';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { appRequest } from 'api/config';
 
 export const LoginForm = () => {
 	//delete email, only development
@@ -28,6 +29,7 @@ export const LoginForm = () => {
 	const [remember, setRemember] = useState(false);
 	const { isOpen, onToggle } = useDisclosure();
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	function onSubmit(e: any) {
 		e.preventDefault();
@@ -47,8 +49,10 @@ export const LoginForm = () => {
 					isLogged: true,
 				})
 			);
+			//@ts-ignore
+			appRequest.defaults.headers['authorization'] = `Bearer ${data.token}`;
 
-			location.href = '/#/app';
+			navigate('/app', { replace: true });
 			return 'Login exitoso';
 		};
 

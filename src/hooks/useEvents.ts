@@ -11,6 +11,7 @@ export const useEvents = () => {
 	const dispatch = useDispatch();
 
 	const getEvents = useCallback(() => {
+		if (!_id) return;
 		getEventByCompany({ companyId: _id })
 			.then(({ data }) => {
 				dispatch(
@@ -30,11 +31,11 @@ export const useEvents = () => {
 			})
 			.catch((err) => console.log(err.response))
 			.finally(() => setLoading(false));
-	}, []);
+	}, [_id]);
 
 	useEffect(() => {
 		getEvents();
-	}, []);
+	}, [_id]);
 	return {
 		isLoading,
 		events,

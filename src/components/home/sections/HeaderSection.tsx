@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Box, Heading, Tag, Flex, Button } from '@chakra-ui/react';
-import { useEvents } from 'hooks/useEvents';
+import { useAppSelector } from 'app/hooks';
 
 export const HeaderSection = () => {
-	const {
-		metadata: { totalDocs },
-	} = useEvents();
+	const { totalDocs } = useAppSelector((state) => state.events);
+
 	return (
 		<>
 			<Box bg='white' shadow='lg' p={5} borderRadius='lg'>

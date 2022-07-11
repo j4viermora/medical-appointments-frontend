@@ -15,7 +15,7 @@ interface IMetadata {
 }
 
 interface IPatientsState {
-	patients: IPatient[];
+	patients: IPatient[] | [];
 	isLoading: boolean;
 	metadata: IMetadata;
 }
