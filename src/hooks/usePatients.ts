@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import {
 	getPatiens as patientsFromApi,
 	getPatiensByDni,
 	registerPatients,
 	removePatient,
+	updatePatient as updateFromApi,
 } from 'api';
 import {
 	setMetadata,
@@ -14,6 +15,7 @@ import {
 import {
 	IPatienDataRegister,
 	IPatientForm,
+	IPatientUpdate,
 } from 'interfaces/patients.interfaces';
 import { ToastId, useToast } from '@chakra-ui/react';
 
@@ -36,7 +38,7 @@ export const usePatients = () => {
 
 	const addPatient = async (
 		form: IPatientForm,
-		onClose: () => void,
+		onClose?: () => void,
 		resetForm?: () => void
 	) => {
 		dispacth(setLoading(true));
@@ -56,7 +58,7 @@ export const usePatients = () => {
 					status: 'success',
 					isClosable: true,
 				});
-				onClose();
+				onClose && onClose();
 				resetForm && resetForm();
 				await getPatiens();
 			} else {
@@ -134,11 +136,51 @@ export const usePatients = () => {
 				title: 'No se encontraron registros',
 				status: 'warning',
 			});
-			// toast({
-			// 	title: 'Opss!',
-			// 	description: 'Algo salio mal',
-			// 	status: 'error',
-			// });
+		} finally {
+			dispacth(setLoading(false));
+		}
+	};
+
+	const getOnePatient = async (dni: string) => {
+		dispacth(setLoading(true));
+		try {
+			const {
+				data: { data },
+			} = await getPatiensByDni(dni, companyId);
+			return data;
+		} catch (error) {
+			toast({
+				title:
+					'Algo salio mal mientras se consultaba la informacion dle paciente',
+				status: 'warning',
+			});
+		} finally {
+			dispacth(setLoading(false));
+		}
+	};
+
+	const updatePatient = async (
+		id: string,
+		body: IPatientUpdate,
+		onToggle: (value: React.SetStateAction<boolean>) => void
+	) => {
+		dispacth(setLoading(true));
+		try {
+			const { data } = await updateFromApi(id, body);
+			console.log(data);
+			toast({
+				title: 'Exito',
+				description: 'Usuario actualizado correctamente',
+				status: 'success',
+				isClosable: true,
+			});
+			onToggle && onToggle((prev: boolean) => !prev);
+		} catch (error) {
+			toast({
+				title:
+					'Algo salio mal mientras se actualizaba la informacion del paciente',
+				status: 'error',
+			});
 		} finally {
 			dispacth(setLoading(false));
 		}
@@ -153,8 +195,10 @@ export const usePatients = () => {
 	return {
 		addPatient,
 		getPatiens,
+		getOnePatient,
 		deletePatient,
 		searchPatients,
+		updatePatient,
 		// goToNextPage,
 		// goToPrevPage,
 		// goToFirstPage,

@@ -16,6 +16,12 @@ import {
 import { IconType } from 'react-icons';
 
 import { NavItem } from './NavItem';
+import {
+	AiOutlineCalendar,
+	AiOutlineContacts,
+	AiOutlineUser,
+	AiOutlineUsergroupAdd,
+} from 'react-icons/ai';
 
 interface LinkItemProps {
 	name: string;
@@ -24,11 +30,11 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
 	{ name: 'Inicio', icon: FiHome, to: '/app/' },
-	{ name: 'Citas', icon: FiCompass, to: '/app/events' },
-	{ name: 'Pacientes', icon: FiSettings, to: '/app/patients' },
-	{ name: 'Doctores', icon: FiTrendingUp, to: '/app/products' },
-	{ name: 'Consultorio', icon: FiStar, to: '/app/categories' },
-	{ name: 'Perfil', icon: FiSettings, to: '/app/profile' },
+	{ name: 'Citas', icon: AiOutlineCalendar, to: '/app/events' },
+	{ name: 'Pacientes', icon: AiOutlineContacts, to: '/app/patients' },
+	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: '/app/products' },
+	{ name: 'Consultorio', icon: FiSettings, to: '/app/categories' },
+	{ name: 'Perfil', icon: AiOutlineUser, to: '/app/profile' },
 ];
 
 interface SidebarProps extends BoxProps {

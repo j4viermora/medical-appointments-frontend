@@ -5,6 +5,7 @@ import {
 	Heading,
 	Progress,
 	Text,
+	useMediaQuery,
 	useDisclosure,
 } from '@chakra-ui/react';
 import { AddPatientsModal } from 'components/patients/modals/AddPatients';
@@ -12,9 +13,11 @@ import { Card, CustomFAB } from 'components/shared';
 import { PatientsItems } from 'components/patients/PatientsItems';
 import { SearchPatientsForm } from 'components/patients/SearchPatientsForm';
 import { usePatients } from 'hooks';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const Patients = () => {
+	const navigate = useNavigate();
+	const [isLargerThan500] = useMediaQuery('(min-width: 500px)');
 	const [searchParams] = useSearchParams();
 	const { isOpen, onClose, onOpen } = useDisclosure();
 	const { isLoading, patients, metadata, getPatiens, searchPatients } =
@@ -22,12 +25,17 @@ export const Patients = () => {
 	const queryParams = searchParams.get('q');
 
 	useEffect(() => {
+		console.log(isLargerThan500);
 		queryParams && searchPatients(queryParams);
 	}, []);
 
 	useEffect(() => {
 		!queryParams && getPatiens();
 	}, []);
+
+	const handleAddPatient = () => {
+		isLargerThan500 ? onOpen() : navigate('add');
+	};
 
 	return (
 		<>
@@ -51,7 +59,7 @@ export const Patients = () => {
 				</>
 			)}
 			<AddPatientsModal isOpen={isOpen} onClose={onClose} />
-			<CustomFAB onClick={onOpen} />
+			<CustomFAB onClick={handleAddPatient} />
 		</>
 	);
 };

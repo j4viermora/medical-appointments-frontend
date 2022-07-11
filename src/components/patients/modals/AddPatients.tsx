@@ -8,7 +8,6 @@ import {
 	FormControl,
 	FormLabel,
 	Input,
-	ModalFooter,
 	Button,
 	ButtonGroup,
 	FormErrorMessage,
@@ -38,17 +37,17 @@ export const AddPatientsModal = ({
 			.min(3, 'Debe tener minimo 3 caracteres')
 			.trim()
 			.required('Este campo es requerido'),
-		city: Yup.string().trim().lowercase().required(),
+		city: Yup.string().trim().lowercase().required('Este campo es requerido'),
 		email: Yup.string()
 			.trim()
 			.email('El campo debe ser un email valido')
-			.optional(),
+			.required('Email es requerido'),
 		dni: Yup.string()
 			.min(4, 'Este campo no puede ser tan corto')
 			.trim()
 			.lowercase()
 			.required('Este campo es requerido'),
-		phone: Yup.string().trim().required(),
+		phone: Yup.string().trim().required('Telefono es un campo requerido'),
 	});
 
 	const { errors, handleSubmit, getFieldProps, touched } = useFormik({
@@ -74,14 +73,14 @@ export const AddPatientsModal = ({
 				onClose={onClose}
 				motionPreset='slideInBottom'
 				scrollBehavior='inside'
-				size='full'
+				size='lg'
 			>
 				<ModalOverlay />
 				<ModalContent>
-					<form onSubmit={handleSubmit}>
-						<ModalHeader>Agregar Paciente</ModalHeader>
-						<ModalCloseButton />
-						<ModalBody>
+					<ModalHeader>Agregar Paciente</ModalHeader>
+					<ModalCloseButton />
+					<ModalBody>
+						<form onSubmit={handleSubmit}>
 							<FormControl
 								mt={4}
 								isInvalid={touched.name && errors.name ? true : false}
@@ -137,9 +136,13 @@ export const AddPatientsModal = ({
 								<Input type='email' {...getFieldProps('email')} />
 								<FormErrorMessage>{errors.email}</FormErrorMessage>
 							</FormControl>
-						</ModalBody>
-						<ModalFooter>
-							<ButtonGroup gap='4'>
+
+							<ButtonGroup
+								gap='4'
+								my={'4'}
+								display='flex'
+								justifyContent={'flex-end'}
+							>
 								<Button variant='ghost' onClick={onClose} disabled={isLoading}>
 									Cancelar
 								</Button>
@@ -152,8 +155,8 @@ export const AddPatientsModal = ({
 									Guardar
 								</Button>
 							</ButtonGroup>
-						</ModalFooter>
-					</form>
+						</form>
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 		</>

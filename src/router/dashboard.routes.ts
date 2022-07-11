@@ -1,7 +1,8 @@
 import { IRoute } from 'interfaces';
 import { Home, Profile, SingleEvent, EventView, Patients } from 'pages/app';
+import { AddPatient } from 'pages/app/patients/AddPatient';
 import { PatientView } from 'pages/app/patients/PatientView';
-import { lazy } from 'react';
+// import { lazy } from 'react';
 
 // const PatientsPage = lazy(() => import('pages/app/patients/Patients'));
 
@@ -11,5 +12,6 @@ export const privateRoutes: IRoute[] = [
 	{ component: EventView, name: 'EventView', path: 'events' },
 	{ component: Profile, name: 'Home', path: 'profile' },
 	{ component: Patients, name: 'Patiens', path: 'patients' },
-	{ component: PatientView, name: 'patient-view', path: 'patients/view/:id' },
+	{ component: PatientView, name: 'patient-view', path: 'patients/view/:dni' },
+	{ component: AddPatient, name: 'add-patien', path: 'patients/add' },
 ];

@@ -62,3 +62,12 @@ export interface IPatientForm {
 	dni: string;
 	phone: string;
 }
+
+export interface IPatientUpdate {
+	name: string;
+	lastName: string;
+	city: string;
+	email: string;
+	dni: string;
+	phone: string;
+}

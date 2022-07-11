@@ -86,7 +86,7 @@ export const PatientsItems = ({ patients, ...rest }: IProps) => {
 						</Flex>
 
 						<ButtonGroup gap='4' justifyContent='center' marginTop={'4'}>
-							<Button as={RouterLink} w='full' to={`view/${_id}`}>
+							<Button as={RouterLink} w='full' to={`view/${dni}`}>
 								Ver mas
 							</Button>
 							<Button
