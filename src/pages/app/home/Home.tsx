@@ -1,5 +1,5 @@
-import { Box, Progress } from '@chakra-ui/react';
-import { EventItem } from 'components/home/cards';
+import { Box, Grid, GridItem, Progress } from '@chakra-ui/react';
+import { AppointmentItem } from 'components/home/cards';
 import { HeaderSection } from 'components/home/sections';
 import { FABcreateEvent } from 'components/home/buttons';
 
@@ -12,11 +12,21 @@ export const Home = () => {
 	return (
 		<Box>
 			<HeaderSection />
-			<Box display='flex' flexWrap={'wrap'} gap='5' justifyContent='center'>
+			<Grid
+				mt='4'
+				templateColumns={{
+					sm: '1fr',
+					md: 'repeat(2,1fr)',
+					lg: 'repeat(3, 1fr)',
+				}}
+				gap='4'
+			>
 				{events.map((item) => (
-					<EventItem key={item._id} {...item}></EventItem>
+					<GridItem key={item._id}>
+						<AppointmentItem {...item} />
+					</GridItem>
 				))}
-			</Box>
+			</Grid>
 			<FABcreateEvent />
 		</Box>
 	);

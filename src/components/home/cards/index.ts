@@ -1,1 +1,1 @@
-export { EventItem } from './EventItem';
+export { AppointmentItem } from './AppointmentItem';

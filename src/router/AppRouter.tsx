@@ -20,7 +20,7 @@ export const AppRouter = () => {
 						<Route key={name} path={path} element={<Component />} />
 					))}
 					<Route path='/' element={<Navigate to='login' />} />
-					<Route path='*' element={<Navigate to='login' />} />
+					<Route path='*' element={<Navigate to='404' />} />
 				</Route>
 			</Routes>
 		</HashRouter>

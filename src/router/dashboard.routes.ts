@@ -8,8 +8,12 @@ import { PatientView } from 'pages/app/patients/PatientView';
 
 export const privateRoutes: IRoute[] = [
 	{ component: Home, name: 'Home', path: '' },
-	{ component: SingleEvent, name: 'SingleEvent', path: 'events/id/:id' },
-	{ component: EventView, name: 'EventView', path: 'events' },
+	{
+		component: SingleEvent,
+		name: 'SingleEvent',
+		path: 'appointments/view/:id',
+	},
+	{ component: EventView, name: 'EventView', path: 'appointments' },
 	{ component: Profile, name: 'Home', path: 'profile' },
 	{ component: Patients, name: 'Patiens', path: 'patients' },
 	{ component: PatientView, name: 'patient-view', path: 'patients/view/:dni' },

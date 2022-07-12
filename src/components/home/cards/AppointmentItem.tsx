@@ -9,22 +9,40 @@ import {
 	Tag,
 	Box,
 	Flex,
+	IconButton,
+	ButtonGroup,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { IEvent } from 'interfaces/events.interfaces';
 import { DateTime } from 'luxon';
+import { DeleteIcon } from '@chakra-ui/icons';
 
-export function EventItem({
+const message = `*Este es un mensaje que viene de la api*
+y uso dos variabels para funcionar 
+{{nombre}} y {{fecha}}`;
+
+export function AppointmentItem({
 	patient,
-	description,
 	dateEvent,
 	confirmationMessageSent,
 	_id,
 }: IEvent) {
 	const { name, lastName, phone, city, dni } = patient;
 	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
+
+	const addNameAndDateToMessage = (
+		message: string,
+		name: string,
+		dateAppointment: string
+	): string => {
+		const newMessage = message
+			.replace('{{nombre}}', name)
+			.replace('{{fecha}}', dateAppointment);
+		return newMessage;
+	};
+
 	const whatsappMessage = encodeURI(
-		`Hola ${name} ${lastName} este mensaje es para recordarte que para la fecha *${formatDate}* tiene su proxima cita. Si no podra asistir por alguna razon no dude en contactarnos. Saludos`
+		addNameAndDateToMessage(message, name, formatDate)
 	);
 	const whatsappUrl = `https://wa.me/${phone}?text=${whatsappMessage}`;
 
@@ -35,48 +53,24 @@ export function EventItem({
 	// };
 
 	return (
-		<Center py={6}>
-			<Stack
-				borderWidth='1px'
-				borderRadius='lg'
-				w={{ sm: '100%', md: '400px' }}
-				height={{ sm: '476px', md: '15rem' }}
-				direction={{ base: 'column', md: 'row' }}
-				bg={useColorModeValue('white', 'gray.900')}
-				boxShadow={'2xl'}
-				paddingY={4}
-				paddingX={2}
-			>
-				{/* TODO - consider add client photo */}
-				{/* <Flex flex={1} bg='blue.200'>
-					<Image
-						objectFit='cover'
-						boxSize='100%'
-						src={
-							'https://images.unsplash.com/photo-1520810627419-35e362c5dc07?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
-						}
-					/>
-				</Flex> */}
-				<Stack
-					flexDirection='column'
-					justifyContent='center'
-					alignItems='center'
-					p={1}
-				>
-					<Heading fontSize={'2xl'} fontFamily={'body'}>
-						{name} {lastName}
-					</Heading>
+		<>
+			<Stack borderRadius='lg' bg={'white'} boxShadow={'lg'} padding='7'>
+				<Stack flexDirection='column' p={1}>
+					<Flex justifyContent={'space-between'} alignItems='center'>
+						<Heading fontSize={'2xl'} fontFamily={'body'}>
+							{name} {lastName}
+						</Heading>
+						<IconButton
+							aria-label='delete-appointment'
+							icon={<DeleteIcon />}
+							colorScheme='red'
+						/>
+					</Flex>
+
 					<Text fontWeight={600} color={'gray.500'} size='sm' mb={4}>
-						{phone}
+						Telefono{phone}
 					</Text>
-					<Stack
-						align={'center'}
-						justify={'space-around'}
-						flexWrap='wrap'
-						gap={'2'}
-						direction={'row'}
-						mt={6}
-					>
+					<Stack>
 						<Flex gap='2'>
 							<Box as='span' fontWeight='bold'>
 								Dirección:
@@ -112,25 +106,10 @@ export function EventItem({
 								{confirmationMessageSent ? 'Enviado' : 'No enviado'}
 							</Tag>
 						</Box>
-
-						<Badge
-							px={2}
-							py={1}
-							bg={useColorModeValue('gray.50', 'gray.800')}
-							fontWeight={'400'}
-						>
-							{formatDate}
-						</Badge>
+						<Text>{formatDate}</Text>
 					</Stack>
 
-					<Stack
-						width={'100%'}
-						mt={'2rem'}
-						direction={'row'}
-						padding={2}
-						justifyContent={'space-between'}
-						alignItems={'center'}
-					>
+					<ButtonGroup>
 						<Button
 							// onClick={sendMessageWhatsapp}
 							as={'a'}
@@ -160,9 +139,9 @@ export function EventItem({
 						>
 							Ver detalles
 						</Button>
-					</Stack>
+					</ButtonGroup>
 				</Stack>
 			</Stack>
-		</Center>
+		</>
 	);
 }

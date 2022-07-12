@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { IRoute } from 'interfaces';
+import NotFound from 'pages/auth/NotFound';
 // import { LoginPage, RegisterPage } from 'pages/auth';
 
 const DemoLazy = lazy(() => import('pages/DemoLazy'));
@@ -28,4 +29,5 @@ export const publicRoutes: IRoute[] = [
 		component: FormikYup,
 		path: 'formik-yup',
 	},
+	{ name: 'Not found', component: NotFound, path: '404' },
 ];

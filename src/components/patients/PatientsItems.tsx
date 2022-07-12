@@ -11,13 +11,6 @@ import {
 	Grid,
 	Link,
 	IconButton,
-	useDisclosure,
-	AlertDialog,
-	AlertDialogOverlay,
-	AlertDialogContent,
-	AlertDialogHeader,
-	AlertDialogBody,
-	AlertDialogFooter,
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { IPatient } from 'interfaces';
