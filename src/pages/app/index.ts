@@ -6,3 +6,5 @@ export { AddAppointmentPage } from './appointments/AddAppointmentPage';
 
 export { Patients } from './patients/Patients';
 export { AddPatient } from './patients/AddPatient';
+
+export { CompanyPage } from './company/CompanyPage';

@@ -7,6 +7,7 @@ import {
 	Patients,
 	AddAppointmentPage,
 	AddPatient,
+	CompanyPage,
 } from 'pages/app';
 import { PatientView } from 'pages/app/patients/PatientView';
 // import { lazy } from 'react';
@@ -30,4 +31,5 @@ export const privateRoutes: IRoute[] = [
 		name: 'add-appoinment',
 		path: 'appointments/add',
 	},
+	{ component: CompanyPage, name: 'company-page', path: 'company' },
 ];

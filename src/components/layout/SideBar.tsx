@@ -30,11 +30,11 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
 	{ name: 'Inicio', icon: FiHome, to: '/app/' },
-	{ name: 'Citas', icon: AiOutlineCalendar, to: '/app/events' },
-	{ name: 'Pacientes', icon: AiOutlineContacts, to: '/app/patients' },
-	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: '/app/products' },
-	{ name: 'Consultorio', icon: FiSettings, to: '/app/categories' },
-	{ name: 'Perfil', icon: AiOutlineUser, to: '/app/profile' },
+	{ name: 'Citas', icon: AiOutlineCalendar, to: 'events' },
+	{ name: 'Pacientes', icon: AiOutlineContacts, to: 'patients' },
+	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: 'products' },
+	{ name: 'Consultorio', icon: FiSettings, to: 'company' },
+	{ name: 'Perfil', icon: AiOutlineUser, to: 'profile' },
 ];
 
 interface SidebarProps extends BoxProps {

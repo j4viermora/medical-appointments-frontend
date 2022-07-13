@@ -1,40 +1,38 @@
-# React chakra-ui template
-Simple template react template ready for production, don't worry about settings and start code fast.
+# Medical appointent (Daily doc)
 
-## Environment
-Node js Obviulys, Node 16^, to know what version you have, run this script in your terminal
+## Enviroment
+
+This project is built with react js and chackre ui and react toolkit like global state managament
+
+Befone star coding you need verify if you have node js install in yout machine, open terminal and write next command 
 
 ```bash
 node --version
 ```
-
-Clone this repo and now you start code
+Expect output 
 ```bash
-git clone https://github.com/j4viermora/react-chakra-ui-template
+node 14 // or lastest
 ```
+Into project install node modeules
 
+```bash
+npm install
+```
+Or yarn
+```bash
+yarn
+````
 
-## State global managemetent
-- Jotai [Link to doc](https://jotai.com)
+Awesome you have running the project!!
 
-## Router
-- React router DOM [Link to doc](https://reactrouter.com/)
+## Features
 
-## User interfaces
-
-The best customizer react library chakra ui, if you want imagine, lets do it fast and easy.
-
-- [Chackra ui](https://chakra-ui.com)
-- [Emotion](https://emotion.sh/docs/introduction)
-- [Framer motion](https://www.framer.com/motion)
-
-## Server State and Api calls
-Axios, library by default in everything javascript projects 😁 
-and:
-
-[React Query](https://react-query.tanstack.com/) Remember, them don't replace state management, only easy work with you backend. Living together (Jotai ant React Query)
-
-
-## Others
-If you want, change html meta tag title, only user react [Helmet](https://www.npmjs.com/package/react-helmet) when you data base return html like plaint text, and you want render with react, [React html parse](https://www.npmjs.com/package/html-react-parser)
-
+- Handle appointment (easy send reminer message (inital whatsapp and maybe email)) 
+- Handle comment by patients ( not private info, no medical historial)
+- Register common expenses
+- Report best patient
+- Report bad patient
+- Total patient
+- Report income by month 
+- Expense by month
+- Transaction (view origin found, and pay methods)

@@ -25,6 +25,8 @@ import { RootState } from 'app/store';
 import { useAuth } from 'hooks';
 import { Spinner } from 'components/shared';
 
+import { Link } from 'react-router-dom';
+
 export function SidebarWithHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	// const { checking } = useAuth();
@@ -132,9 +134,10 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 									<Text fontSize='sm'>
 										{name} {lastName}
 									</Text>
-									<Text fontSize='xs' color='gray.600'>
+									{/* TODO agregar el rol del usuario */}
+									{/* <Text fontSize='xs' color='gray.600'>
 										Admin
-									</Text>
+									</Text> */}
 								</VStack>
 								<Box display={{ base: 'none', md: 'flex' }}>
 									<FiChevronDown />
@@ -145,8 +148,12 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 							bg={useColorModeValue('white', 'gray.900')}
 							borderColor={useColorModeValue('gray.200', 'gray.700')}
 						>
-							<MenuItem>Perfil</MenuItem>
-							<MenuItem>Cosultorio</MenuItem>
+							<MenuItem as={Link} to='profile'>
+								Perfil
+							</MenuItem>
+							<MenuItem as={Link} to='company'>
+								Cosultorio
+							</MenuItem>
 							{/* <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem> */}
 							<MenuDivider />
