@@ -8,3 +8,6 @@ export { Patients } from './patients/Patients';
 export { AddPatient } from './patients/AddPatient';
 
 export { CompanyPage } from './company/CompanyPage';
+
+export { DoctorsPage } from './doctors/Doctors';
+export { AddDoctorPage } from './doctors/AddDoctorPage';

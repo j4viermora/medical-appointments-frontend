@@ -6,13 +6,7 @@ import {
 	Text,
 	useColorModeValue,
 } from '@chakra-ui/react';
-import {
-	FiHome,
-	FiTrendingUp,
-	FiCompass,
-	FiStar,
-	FiSettings,
-} from 'react-icons/fi';
+import { FiHome, FiSettings } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 
 import { NavItem } from './NavItem';
@@ -32,7 +26,7 @@ const LinkItems: Array<LinkItemProps> = [
 	{ name: 'Inicio', icon: FiHome, to: '/app/' },
 	{ name: 'Citas', icon: AiOutlineCalendar, to: 'events' },
 	{ name: 'Pacientes', icon: AiOutlineContacts, to: 'patients' },
-	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: 'products' },
+	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: 'doctors' },
 	{ name: 'Consultorio', icon: FiSettings, to: 'company' },
 	{ name: 'Perfil', icon: AiOutlineUser, to: 'profile' },
 ];

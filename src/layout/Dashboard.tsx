@@ -29,7 +29,7 @@ import { Link } from 'react-router-dom';
 
 export function SidebarWithHeader() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	// const { checking } = useAuth();
+	const { checking } = useAuth();
 
 	return (
 		<Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -53,8 +53,8 @@ export function SidebarWithHeader() {
 			{/* mobilenav */}
 			<MobileNav onOpen={onOpen} />
 			<Box ml={{ base: 0, md: 60 }} p='4'>
-				{/* {checking ? <Spinner /> : <Outlet />} */}
-				<Outlet />
+				{checking ? <Spinner /> : <Outlet />}
+				{/* <Outlet /> */}
 				{/* componente de react router dom  */}
 			</Box>
 		</Box>
