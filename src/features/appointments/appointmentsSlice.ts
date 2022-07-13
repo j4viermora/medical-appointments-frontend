@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { IEvent } from 'interfaces/events.interfaces';
 
-interface IEventStore {
-	events: IEvent[];
+interface IAppointmentsStore {
+	appointments: IEvent[];
 	totalDocs: number;
 	limit: number;
 	totalPages: number;
@@ -15,8 +15,8 @@ interface IEventStore {
 	nextPage: null | boolean;
 }
 
-const initialState: IEventStore = {
-	events: [
+const initialState: IAppointmentsStore = {
+	appointments: [
 		{
 			_id: '',
 			branchOffice: '',
@@ -69,12 +69,12 @@ const initialState: IEventStore = {
 	totalPages: 1,
 };
 
-const eventsSlice = createSlice({
+const appointmentsSlice = createSlice({
 	initialState,
 	name: 'events ',
 	reducers: {
-		setEvents: (state, action: PayloadAction<IEventStore>) => {
-			state.events = action.payload.events;
+		setEvents: (state, action: PayloadAction<IAppointmentsStore>) => {
+			state.appointments = action.payload.appointments;
 			state.hasNextPage = action.payload.hasNextPage;
 			state.hasPrevPage = action.payload.hasPrevPage;
 			state.totalDocs = action.payload.totalDocs;
@@ -82,5 +82,5 @@ const eventsSlice = createSlice({
 		},
 	},
 });
-export const { setEvents } = eventsSlice.actions;
-export default eventsSlice.reducer;
+export const { setEvents } = appointmentsSlice.actions;
+export default appointmentsSlice.reducer;

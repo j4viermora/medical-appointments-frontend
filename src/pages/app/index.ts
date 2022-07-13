@@ -1,5 +1,8 @@
 export { Home } from './home/Home';
 export { Profile } from './profile/Profile';
-export { SingleEvent } from './events/SingleEvent';
-export { EventView } from './events/EventView';
+export { AppointmentView } from './appointments/SingleAppointment';
+export { AppointmentsView } from './appointments/AppointmentsView';
+export { AddAppointmentPage } from './appointments/AddAppointmentPage';
+
 export { Patients } from './patients/Patients';
+export { AddPatient } from './patients/AddPatient';

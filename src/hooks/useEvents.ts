@@ -1,13 +1,15 @@
 import { getEventByCompany } from 'api';
 import { RootState } from 'app/store';
-import { setEvents } from 'features/events/eventsSlice';
+import { setEvents } from 'features/appointments/appointmentsSlice';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useEvents = () => {
 	const [isLoading, setLoading] = useState(true);
 	const { _id } = useSelector((state: RootState) => state.session.company);
-	const { events, ...rest } = useSelector((state: RootState) => state.events);
+	const { appointments, ...rest } = useSelector(
+		(state: RootState) => state.appointments
+	);
 	const dispatch = useDispatch();
 
 	const getEvents = useCallback(() => {
@@ -16,7 +18,7 @@ export const useEvents = () => {
 			.then(({ data }) => {
 				dispatch(
 					setEvents({
-						events: data.data.docs,
+						appointments: data.data.docs,
 						hasNextPage: data.data.hasNextPage,
 						hasPrevPage: data.data.hasPrevPage,
 						nextPage: data.data.nextPage,
@@ -38,7 +40,7 @@ export const useEvents = () => {
 	}, [_id]);
 	return {
 		isLoading,
-		events,
+		appointments,
 		metadata: rest,
 	};
 };

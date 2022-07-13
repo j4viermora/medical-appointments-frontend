@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from 'features/session/sessionSlice';
-import eventsSlice from 'features/events/eventsSlice';
+import appointmentsSlice from 'features/appointments/appointmentsSlice';
 import patientsSlice from 'features/patients/patientsSlice';
 export const store = configureStore({
 	reducer: {
 		session: sessionReducer,
-		events: eventsSlice,
+		appointments: appointmentsSlice,
 		patients: patientsSlice,
 	},
 });
