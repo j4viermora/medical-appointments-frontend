@@ -59,3 +59,24 @@ export interface Patient {
 	updatedAt: string;
 	__v: number;
 }
+
+
+
+
+
+export interface Appointment {
+	title: string;
+	description: string;
+	observations: string;
+	companyId: string;
+	branchOffice: string;
+	doctor: string;
+	patient: string;
+	patientDni: string;
+	dateEvent: string;
+	startDateEvent?: string;
+	endDateEvent?: string;
+	status: boolean;
+	state: string;
+	paymentState: string;
+}

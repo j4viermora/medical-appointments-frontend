@@ -3,7 +3,7 @@ import { AppointmentItem } from 'components/home/cards';
 import { HeaderSection } from 'components/home/sections';
 import { FABcreateEvent } from 'components/home/buttons';
 
-import { useEvents } from 'hooks/useEvents';
+import { useEvents } from 'hooks/useAppointments';
 
 export const Home = () => {
 	const { appointments, isLoading } = useEvents();

@@ -1,10 +1,11 @@
-import { getEventByCompany } from 'api';
+import { getEventByCompany, registerAppointment } from 'api';
 import { RootState } from 'app/store';
 import { setEvents } from 'features/appointments/appointmentsSlice';
-import { useCallback, useEffect, useState } from 'react';
+import { Appointment } from 'interfaces/events.interfaces';
+import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const useEvents = () => {
+export const useAppointments = () => {
 	const [isLoading, setLoading] = useState(true);
 	const { _id } = useSelector((state: RootState) => state.session.company);
 	const { appointments, ...rest } = useSelector(
@@ -13,8 +14,7 @@ export const useEvents = () => {
 	const dispatch = useDispatch();
 
 	const getEvents = useCallback(() => {
-		if (!_id) return;
-		getEventByCompany({ companyId: _id })
+		if (!_id) return; getEventByCompany({ companyId: _id })
 			.then(({ data }) => {
 				dispatch(
 					setEvents({
@@ -35,12 +35,25 @@ export const useEvents = () => {
 			.finally(() => setLoading(false));
 	}, [_id]);
 
-	useEffect(() => {
-		getEvents();
-	}, [_id]);
+
+
+	const addAppointment = (appointmentInfo: Appointment) => {
+
+		registerAppointment({ ...appointmentInfo })
+
+	}
+	const deleteEvent = () => { }
+	const updateEvent = () => { }
+	const searchEvent = () => { }
+
 	return {
 		isLoading,
 		appointments,
 		metadata: rest,
+		getEvents,
+		addAppointment,
+		deleteEvent,
+		updateEvent,
+		searchEvent,
 	};
 };
