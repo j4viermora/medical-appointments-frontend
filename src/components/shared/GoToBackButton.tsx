@@ -1,8 +1,18 @@
 import { Box, IconButton } from '@chakra-ui/react';
+import { FC } from 'react';
 import { MdArrowBack } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
-export const GoToBackButton = () => {
-	const goBack = () => {};
+export const GoToBackButton: FC<any> = ({
+	w = '50px',
+	h = '50px',
+	bottom = 5,
+	right = 50,
+}) => {
+	const navigate = useNavigate();
+	const goBack = () => {
+		navigate(-1);
+	};
 	return (
 		<Box
 			position='fixed'

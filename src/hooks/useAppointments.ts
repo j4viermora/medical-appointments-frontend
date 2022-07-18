@@ -1,8 +1,8 @@
 import { getEventByCompany, registerAppointment } from 'api';
 import { RootState } from 'app/store';
-import { setEvents } from 'features/appointments/appointmentsSlice';
+import { setAppointments } from 'features/appointments/appointmentsSlice';
 import { Appointment } from 'interfaces/events.interfaces';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const useAppointments = () => {
@@ -13,11 +13,11 @@ export const useAppointments = () => {
 	);
 	const dispatch = useDispatch();
 
-	const getEvents = useCallback(() => {
-		if (!_id) return; getEventByCompany({ companyId: _id })
+	const getEvents = () => {
+		getEventByCompany({ companyId: _id })
 			.then(({ data }) => {
 				dispatch(
-					setEvents({
+					setAppointments({
 						appointments: data.data.docs,
 						hasNextPage: data.data.hasNextPage,
 						hasPrevPage: data.data.hasPrevPage,
@@ -33,14 +33,16 @@ export const useAppointments = () => {
 			})
 			.catch((err) => console.log(err.response))
 			.finally(() => setLoading(false));
-	}, [_id]);
+	}
 
 
 
-	const addAppointment = (appointmentInfo: Appointment) => {
-
-		registerAppointment({ ...appointmentInfo })
-
+	const addAppointment = async (appointmentInfo: Appointment) => {
+		try {
+			await registerAppointment({ ...appointmentInfo })
+		} catch (err) {
+			console.log(err)
+		}
 	}
 	const deleteEvent = () => { }
 	const updateEvent = () => { }

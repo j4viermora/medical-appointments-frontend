@@ -1,1 +1,0 @@
-export { FABcreateEvent } from './FABcreateEvent';

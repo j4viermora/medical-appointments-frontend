@@ -8,7 +8,6 @@ function App() {
 	return (
 		<Provider store={store}>
 			<ChakraProvider>
-				{/* Provide the client to app */}
 				<Toaster />
 				<AppRouter />
 			</ChakraProvider>

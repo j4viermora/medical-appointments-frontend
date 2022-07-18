@@ -1,12 +1,24 @@
 import { Box, Grid, GridItem, Progress } from '@chakra-ui/react';
 import { AppointmentItem } from 'components/home/cards';
 import { HeaderSection } from 'components/home/sections';
-import { FABcreateEvent } from 'components/home/buttons';
+import { CustomFAB } from 'components/shared';
 
-import { useEvents } from 'hooks/useAppointments';
+import { useAppointments } from 'hooks/useAppointments';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-	const { appointments, isLoading } = useEvents();
+	const navigate = useNavigate();
+	const { appointments, isLoading, getEvents } = useAppointments();
+
+	useEffect(() => {
+		getEvents();
+	}, []);
+
+	const addAppointment = () => {
+		navigate('appointments/add');
+	};
+
 	if (isLoading) return <Progress size='xs' isIndeterminate />;
 
 	return (
@@ -27,7 +39,7 @@ export const Home = () => {
 					</GridItem>
 				))}
 			</Grid>
-			<FABcreateEvent />
+			<CustomFAB onClick={addAppointment} />
 		</Box>
 	);
 };

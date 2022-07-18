@@ -73,7 +73,7 @@ const appointmentsSlice = createSlice({
 	initialState,
 	name: 'events ',
 	reducers: {
-		setEvents: (state, action: PayloadAction<IAppointmentsStore>) => {
+		setAppointments: (state, action: PayloadAction<IAppointmentsStore>) => {
 			state.appointments = action.payload.appointments;
 			state.hasNextPage = action.payload.hasNextPage;
 			state.hasPrevPage = action.payload.hasPrevPage;
@@ -82,5 +82,5 @@ const appointmentsSlice = createSlice({
 		},
 	},
 });
-export const { setEvents } = appointmentsSlice.actions;
+export const { setAppointments } = appointmentsSlice.actions;
 export default appointmentsSlice.reducer;
