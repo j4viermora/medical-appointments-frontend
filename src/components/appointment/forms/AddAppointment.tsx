@@ -11,8 +11,6 @@ import {
 } from '@chakra-ui/react';
 
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useAppointments } from 'hooks';
 import { Card } from 'components/shared';
 
 import { useSearchParams } from 'react-router-dom';
@@ -29,7 +27,6 @@ export const AddAppointment = () => {
 	});
 
 	useEffect(() => {
-		console.log(queryParams.get('name'));
 		if (
 			queryParams.get('dni') &&
 			queryParams.get('id') &&

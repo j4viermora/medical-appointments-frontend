@@ -5,7 +5,6 @@ import {
 	Button,
 	FormErrorMessage,
 	FormControl,
-	Box,
 	Container,
 } from '@chakra-ui/react';
 

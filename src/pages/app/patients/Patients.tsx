@@ -25,7 +25,6 @@ export const Patients = () => {
 	const queryParams = searchParams.get('q');
 
 	useEffect(() => {
-		console.log(isLargerThan500);
 		queryParams && searchPatients(queryParams);
 	}, []);
 

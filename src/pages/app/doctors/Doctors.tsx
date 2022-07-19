@@ -1,66 +1,51 @@
 import {
+	Button,
+	ButtonGroup,
 	Flex,
 	Grid,
 	GridItem,
 	Heading,
 	Input,
 	Link,
+	Progress,
 	Text,
 } from '@chakra-ui/react';
+import { useAppDispatch } from 'app/hooks';
 import { Card, CustomFAB } from 'components/shared';
-import { useState } from 'react';
+import { IDoctor, setCurrentDoctor } from 'features/doctors/doctorsSlice';
+import { useDoctors } from 'hooks';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-const doctors = [
-	{
-		name: 'Miguel',
-		lastName: 'Mora',
-
-		id: 'fadsfasfdsa',
-	},
-	{
-		name: 'Javier ',
-		lastName: 'Mora',
-
-		id: 'fadsfasfdsa',
-	},
-	{
-		name: 'Javier ',
-		lastName: 'Mora',
-
-		id: 'fadsfasfdsa',
-	},
-	{
-		name: 'Javier ',
-		lastName: 'Mora',
-
-		id: 'fadsfasfdsa',
-	},
-	{
-		name: 'Javier',
-		lastName: 'Mora',
-
-		id: 'fadsfasfdsa',
-	},
-];
-
 export const DoctorsPage = () => {
-	const totalDocs = doctors.length;
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const [listNameDoctors, updateListNameDoctors] = useState(doctors);
-	const filterDoctorsByName = ({
-		target: { value },
-	}: React.ChangeEvent<HTMLInputElement>) => {
-		const filteredListDoctors = doctors.filter(
-			(doctor) =>
-				doctor.name.toLocaleLowerCase().includes(value) ||
-				doctor.lastName.toLocaleLowerCase().includes(value)
-		);
+	const {
+		doctors,
+		isLoading,
+		getDoctors,
+		metadata: { totalDocs },
+	} = useDoctors();
+	// const [listNameDoctors, updateListNameDoctors] = useState(doctors);
 
-		updateListNameDoctors(filteredListDoctors);
+	useEffect(() => {
+		getDoctors();
+	}, []);
+
+	// const filterDoctorsByName = ({
+	// 	target: { value },
+	// }: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const filteredListDoctors = doctors.filter((doctor) =>
+	// 		doctor.name.toLocaleLowerCase().includes(value)
+	// 	);
+
+	// 	updateListNameDoctors(filteredListDoctors);
+	// };
+
+	const addCurrentDoctor = ({ ...info }: IDoctor) => {
+		dispatch(setCurrentDoctor(info));
 	};
-
 	return (
 		<>
 			<Helmet>
@@ -74,32 +59,40 @@ export const DoctorsPage = () => {
 				<Heading size={'lg'}>Doctores</Heading>
 				<Text fontSize='lg'>Total de doctores: {totalDocs}</Text>
 			</Card>
-			<Card>
+			{/* <Card>
 				<Input
 					placeholder='Buscar...'
 					width={'lg'}
 					onChange={filterDoctorsByName}
 				/>
-			</Card>
-			<Grid templateColumns={{ sm: '1fr', md: 'repeat(3, 1fr)' }} gap='4'>
-				{listNameDoctors.map(({ id, name, lastName }) => (
-					<GridItem key={id}>
-						<Card>
-							<Heading size={'md'}>
-								Dr.{name} {lastName}
-							</Heading>
-							<Flex mt='4' alignItems={'center'} gap='4'>
-								<Link as={RouterLink} to={`/app/appointments?q=${id}`}>
-									Citas
-								</Link>
-								<Link as={RouterLink} color='blue.500' to={`view/${id}`}>
-									Ver informacion
-								</Link>
-							</Flex>
-						</Card>
-					</GridItem>
-				))}
-			</Grid>
+			</Card> */}
+			{isLoading ? (
+				<Progress size='xs' isIndeterminate />
+			) : (
+				<Grid templateColumns={{ sm: '1fr', md: 'repeat(3, 1fr)' }} gap='4'>
+					{doctors.map(({ _id, name, phone, ...rest }) => (
+						<GridItem key={_id}>
+							<Card>
+								<Heading size={'md'}>Dr.{name}</Heading>
+								<Text mb='4'>{phone}</Text>
+								<ButtonGroup>
+									<Button as={RouterLink} to={`/app/appointments?q=${_id}`}>
+										Citas
+									</Button>
+									<Button
+										onClick={() =>
+											addCurrentDoctor({ name, phone, _id, ...rest })
+										}
+										colorScheme='blue'
+									>
+										Editar
+									</Button>
+								</ButtonGroup>
+							</Card>
+						</GridItem>
+					))}
+				</Grid>
+			)}
 			<CustomFAB onClick={() => navigate('add')} />
 		</>
 	);

@@ -87,11 +87,9 @@ export const usePatients = () => {
 				data: { data },
 			} = await patientsFromApi({ companyId });
 			const { docs, ...rest } = data;
-			console.log(docs);
 			dispacth(setPatients(docs));
 			dispacth(setMetadata(rest));
 		} catch (error: any) {
-			console.log(error);
 			toast({
 				title: 'Opss algo anda mal',
 				description: JSON.stringify(error.response),
@@ -167,7 +165,6 @@ export const usePatients = () => {
 		dispacth(setLoading(true));
 		try {
 			const { data } = await updateFromApi(id, body);
-			console.log(data);
 			toast({
 				title: 'Exito',
 				description: 'Usuario actualizado correctamente',
