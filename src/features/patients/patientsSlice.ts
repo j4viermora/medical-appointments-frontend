@@ -40,7 +40,7 @@ const initialState: IPatientsState = {
 			updatedAt: '',
 		},
 	],
-	isLoading: true,
+	isLoading: false,
 	metadata: {
 		totalDocs: 0,
 		offset: 0,

@@ -1,75 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {
-	Box,
-	Button,
-	ButtonGroup,
-	Flex,
-	FormControl,
-	FormErrorMessage,
-	FormHelperText,
-	FormLabel,
-	Heading,
-	Input,
-	Container,
-	Select,
-	Textarea,
-	Text,
-	Link,
-} from '@chakra-ui/react';
-import {
-	Link as RouterLink,
-	useParams,
-	useSearchParams,
-	useLocation,
-} from 'react-router-dom';
-import {} from '@chakra-ui/icons';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useAppointments, usePatients } from 'hooks';
+import { Button, Heading, Container, Text, Box } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { Card } from 'components/shared';
+import { SearchPatientsForm } from 'components/patients';
+import { usePatients } from 'hooks';
+import { SimplePatientItem } from 'components/appointment/cards/SimplePatientItem';
 
 export const AddAppointmentPage = () => {
-	// const {} = useAppointments();
-	const [queryParams] = useSearchParams();
-	const [{ id, dni, name }, setPatientInfo] = useState({
-		name: '',
-		id: '',
-		dni: '',
-	});
-
-	useEffect(() => {
-		if (
-			queryParams.get('dni') &&
-			queryParams.get('id') &&
-			queryParams.get('name')
-		) {
-			setPatientInfo({
-				//@ts-ignore
-				dni: queryParams.get('dni'),
-				//@ts-ignore
-				id: queryParams.get('id'),
-				//@ts-ignore
-				name: queryParams.get('name'),
-			});
-		}
-	}, []);
-
-	const { getFieldProps, handleSubmit } = useFormik({
-		initialValues: {
-			title: 'Consulta madica',
-			doctor: '',
-			dateEvent: '',
-			observations: '',
-		},
-		onSubmit: (values) => {
-			console.log({
-				patient: id,
-				patientDni: dni,
-				...values,
-			});
-		},
-		enableReinitialize: true,
-	});
+	const { patients, isLoading } = usePatients();
 	return (
 		<Container>
 			<Card>
@@ -83,45 +21,13 @@ export const AddAppointmentPage = () => {
 					Registralo aqui
 				</Button>
 			</Card>
+			<SearchPatientsForm />
 
-			<Card>
-				<form onSubmit={handleSubmit}>
-					<Heading size={'lg'} mb='4'>
-						Registar cita
-					</Heading>
-					<FormControl mb={4}>
-						<FormLabel>Doctor</FormLabel>
-						<Select {...getFieldProps('doctor')}>
-							<option value=''>Selecionar</option>
-							<option value='2342314523423fgdsafadsfds'>Javier</option>
-						</Select>
-						<FormErrorMessage>Upss</FormErrorMessage>
-					</FormControl>
-					<FormControl mb={4}>
-						<FormLabel>Paciente</FormLabel>
-						<Input />
-						<FormErrorMessage>Upss</FormErrorMessage>
-					</FormControl>
-
-					<FormControl mb={4}>
-						<FormLabel>Fecha</FormLabel>
-						<Input type='date' {...getFieldProps('dateEvent')} />
-						<FormErrorMessage>Upss</FormErrorMessage>
-					</FormControl>
-
-					<FormControl mb={4}>
-						<FormLabel>Observaciones</FormLabel>
-						<Textarea {...getFieldProps('obvervations')} />
-						<FormErrorMessage>Upss</FormErrorMessage>
-					</FormControl>
-
-					<ButtonGroup>
-						<Button colorScheme='blue' type='submit'>
-							Guardar
-						</Button>
-					</ButtonGroup>
-				</form>
-			</Card>
+			{isLoading
+				? 'cargando..'
+				: patients.map((patient) => (
+						<SimplePatientItem key={patient._id} {...patient} />
+				  ))}
 		</Container>
 	);
 };

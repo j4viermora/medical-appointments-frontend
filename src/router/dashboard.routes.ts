@@ -1,3 +1,4 @@
+import { AddAppointment } from 'components/appointment/forms/addAppointment';
 import { IRoute } from 'interfaces';
 import {
 	Home,
@@ -24,6 +25,8 @@ export const privateRoutes: IRoute[] = [
 		path: 'appointments/view/:id',
 	},
 	{ component: AppointmentsView, name: 'EventView', path: 'appointments' },
+	{ component: AddAppointment, name: 'add-apointment-form', path: 'appointments/add/form' },
+
 	{
 		component: AddAppointmentPage,
 		name: 'add-appoinment',
@@ -37,4 +40,5 @@ export const privateRoutes: IRoute[] = [
 	{ component: CompanyPage, name: 'company-page', path: 'company' },
 	{ component: DoctorsPage, name: 'doctors-view', path: 'doctors' },
 	{ component: AddDoctorPage, name: 'doctors-add', path: 'doctors/add' },
+
 ];
