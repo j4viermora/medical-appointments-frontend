@@ -12,3 +12,8 @@ export { CompanyPage } from './company/CompanyPage';
 export { DoctorsPage } from './doctors/Doctors';
 export { DoctorDetails } from './doctors/DoctorDetails'
 export { AddDoctorPage } from './doctors/AddDoctorPage';
+
+
+//Messages
+export { AddMessage } from './messages/AddMessage';
+export { ListMessages } from './messages/ListMessages'

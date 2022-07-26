@@ -1,85 +1,49 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { IAppointment } from 'interfaces/appointments.interfaces';
+import { IMetadata } from 'interfaces';
 
 interface IAppointmentsStore {
-	appointments: IAppointment[];
-	totalDocs: number;
-	limit: number;
-	totalPages: number;
-	page: number;
-	pagingCounter: number;
-	hasPrevPage: boolean;
-	hasNextPage: boolean;
-	prevPage: null | boolean;
-	nextPage: null | boolean;
+	appointments: IAppointment[] | [];
+	metadata: IMetadata;
+	isLoading: boolean;
+}
+
+interface SetAppointmentProps {
+	appointments: IAppointment[] | [];
+	metadata: IMetadata;
 }
 
 const initialState: IAppointmentsStore = {
-	appointments: [
-		{
-			_id: '',
-			branchOffice: '',
-			companyId: '',
-			createdAt: '',
-			createdBy: '',
-			dateEvent: '',
-			description: '',
-			doctor: '',
-			endDateEvent: '',
-			id: '',
-			observations: '',
-			patient: {
-				_id: '',
-				city: '',
-				code: '',
-				companyCode: '',
-				companyEmail: '',
-				companyId: '',
-				createBy: '',
-				createdAt: '',
-				dni: '',
-				email: '',
-				kind: '',
-				lastName: '',
-				name: '',
-				phone: '',
-				status: false,
-				updatedAt: '',
-			},
-			patientDni: '',
-			paymentState: '',
-			startDateEvent: '',
-			state: '',
-			status: false,
-			title: '',
-			updatedAt: '',
-			confirmationMessageSent: false,
-		},
-	],
-	hasNextPage: false,
-	hasPrevPage: false,
-	limit: 0,
-	nextPage: null,
-	page: 1,
-	pagingCounter: 0,
-	prevPage: true,
-	totalDocs: 1,
-	totalPages: 1,
+	appointments: [],
+	metadata: {
+		totalDocs: 0,
+		limit: 0,
+		totalPages: 0,
+		page: 0,
+		pagingCounter: 0,
+		hasPrevPage: false,
+		hasNextPage: false,
+		prevPage: null,
+		nextPage: null,
+	},
+	isLoading: false,
 };
+
+
 
 const appointmentsSlice = createSlice({
 	initialState,
-	name: 'events ',
+	name: 'appointments',
 	reducers: {
-		setAppointments: (state, action: PayloadAction<IAppointmentsStore>) => {
+		setAppointments: (state, action: PayloadAction<SetAppointmentProps>) => {
 			state.appointments = action.payload.appointments;
-			state.hasNextPage = action.payload.hasNextPage;
-			state.hasPrevPage = action.payload.hasPrevPage;
-			state.totalDocs = action.payload.totalDocs;
-			state.totalPages = action.payload.totalPages;
+			state.metadata = action.payload.metadata;
 		},
+		setLoading: (state, action: PayloadAction<boolean>) => {
+			state.isLoading = action.payload;
+		}
 	},
 });
-export const { setAppointments } = appointmentsSlice.actions;
+export const { setAppointments, setLoading } = appointmentsSlice.actions;
 export default appointmentsSlice.reducer;

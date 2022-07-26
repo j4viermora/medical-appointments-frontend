@@ -12,23 +12,22 @@ import {
 	ButtonGroup,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { IAppointment } from 'interfaces/appointments.interfaces';
+import { Appointment } from 'interfaces/appointments.interfaces';
 import { DateTime } from 'luxon';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { useAppointments } from 'hooks';
+import { useState } from 'react';
 
-const message = `*Este es un mensaje que viene de la api*
-y uso dos variabels para funcionar 
-{{nombre}} y {{fecha}}`;
+const message = `*Mensaje de recordatorio*
+Hola {{nombre}}, te recordamos que tienes una cita para {{fecha}}. Por favor, responde este mensaje para confirmarla.
+Saludos.`;
 
 export function AppointmentItem({
 	patient,
 	dateEvent,
 	confirmationMessageSent,
 	_id,
-}: IAppointment) {
-	const { name, lastName, phone, city, dni } = patient;
-	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
-
+}: Appointment) {
 	const addNameAndDateToMessage = (
 		message: string,
 		name: string,
@@ -39,17 +38,25 @@ export function AppointmentItem({
 			.replace('{{fecha}}', dateAppointment);
 		return newMessage;
 	};
-
+	const [isLoading, setLoading] = useState(false);
+	const { name, lastName, phone, city, dni } = patient;
+	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
+	const {deactivateAppointment, getEvents} = useAppointments()
 	const whatsappMessage = encodeURI(
 		addNameAndDateToMessage(message, name, formatDate)
 	);
 	const whatsappUrl = `https://wa.me/${phone}?text=${whatsappMessage}`;
 
-	// const sendMessageWhatsapp = () => {
-	// 	const newWindow = window.open();
-	// 	//@ts-ignore
-	// 	newWindow.location.href = whatsappUrl;
-	// };
+
+	
+	const startDeactivateAppointment = async (id:string) => {
+		setLoading(true)
+		const ok = await deactivateAppointment(id)
+		if(ok) return getEvents({})
+		setLoading(false)
+	}
+
+	if(isLoading) return <div>Eliminando...</div>
 
 	return (
 		<>
@@ -60,6 +67,7 @@ export function AppointmentItem({
 							{name} {lastName}
 						</Heading>
 						<IconButton
+							onClick={() => startDeactivateAppointment(_id)}
 							aria-label='delete-appointment'
 							icon={<DeleteIcon />}
 							colorScheme='red'
@@ -110,7 +118,6 @@ export function AppointmentItem({
 
 					<ButtonGroup>
 						<Button
-							// onClick={sendMessageWhatsapp}
 							as={'a'}
 							href={whatsappUrl}
 							target='_blank'

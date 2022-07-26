@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { IListPatientsResponse, ILoginResponse } from 'interfaces';
-import { IAppointmentsResponse, IAppointment } from 'interfaces/appointments.interfaces';
+import { Appointment, AppointmentsResponse, RegisterAppointmentProps } from 'interfaces/appointments.interfaces';
 import { IDoctorResponse } from 'interfaces/doctors.interface';
 import {
 	IPatienDataRegister,
@@ -39,8 +39,8 @@ export const getEventByCompany = async ({
 	page?: number | string;
 	doctor?: string;
 	companyId: string;
-}): Promise<AxiosResponse<IAppointmentsResponse, any>> => {
-	const resp = appRequest.get<IAppointmentsResponse>(
+}): Promise<AxiosResponse<AppointmentsResponse, any>> => {
+	const resp = appRequest.get<AppointmentsResponse>(
 		`/appointments/company/id/${companyId}`,
 		{
 			params: {
@@ -56,6 +56,7 @@ export const getEventByCompany = async ({
 
 	return resp;
 };
+
 
 export const registerPatients = (patientsData: IPatienDataRegister) => {
 	const resp = appRequest.post('/contacts/add', { ...patientsData });
@@ -105,11 +106,14 @@ export const updatePatient = (id: string, { ...body }: IPatientUpdate) => {
 
 // appointments
 
-export const registerAppointment = async (body: IAppointment) => {
-
-	const resp = appRequest.post('/events/add', { ...body })
+export const registerAppointment = async (body: RegisterAppointmentProps) => {
+	const resp = appRequest.post('/appointments/add', { ...body })
 	return resp
+}
 
+export const deactivateAppointment = async (id: string) => {
+	const resp = appRequest.patch(`/appointments/inactivate/${id}`)
+	return resp
 }
 
 interface queryDoctorsProps {

@@ -1,6 +1,7 @@
 import { Button, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 import { Card } from 'components/shared';
 import { Helmet } from 'react-helmet';
+import { Link as RouterLink } from 'react-router-dom'
 
 export const CompanyPage = () => {
 	return (
@@ -62,7 +63,7 @@ export const CompanyPage = () => {
 							Tus mensjaes predeterminados
 						</Heading>
 						<Text>Agrega mensajes predeterminados </Text>
-						<Button mt='2' size={'sm'} colorScheme='blue'>
+						<Button as={ RouterLink } to='/app/messages' mt='2' size={'sm'} colorScheme='blue'>
 							Ir mensajes
 						</Button>
 					</Card>

@@ -1,14 +1,22 @@
 import { Button, Heading, Container, Text, Box } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Card } from 'components/shared';
+import { Card, GoToBackButton } from 'components/shared';
 import { SearchPatientsForm } from 'components/patients';
 import { usePatients } from 'hooks';
 import { SimplePatientItem } from 'components/appointment/cards/SimplePatientItem';
+import { useEffect } from 'react';
 
 export const AddAppointmentPage = () => {
-	const { patients, isLoading } = usePatients();
+	const { patients, isLoading , getPatiens} = usePatients();
+
+	useEffect(() => {
+		if(patients.length  < 2) getPatiens()
+	},[])
+
+
 	return (
+		<>
 		<Container>
 			<Card>
 				<Heading size={'md'}>Nuevo paciente?</Heading>
@@ -29,5 +37,8 @@ export const AddAppointmentPage = () => {
 						<SimplePatientItem key={patient._id} {...patient} />
 				  ))}
 		</Container>
+		<GoToBackButton/>
+		</>
+
 	);
 };
