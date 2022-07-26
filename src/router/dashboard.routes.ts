@@ -1,4 +1,4 @@
-import { AddAppointment } from 'components/appointment/forms/addAppointment';
+import { AddAppointment } from 'components/appointment/forms/AddAppointment';
 import { IRoute } from 'interfaces';
 import {
 	Home,

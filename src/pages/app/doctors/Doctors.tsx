@@ -1,12 +1,10 @@
 import {
 	Button,
 	ButtonGroup,
-	Flex,
 	Grid,
 	GridItem,
 	Heading,
-	Input,
-	Link,
+
 	Progress,
 	Text,
 } from '@chakra-ui/react';
@@ -27,21 +25,11 @@ export const DoctorsPage = () => {
 		getDoctors,
 		metadata: { totalDocs },
 	} = useDoctors();
-	// const [listNameDoctors, updateListNameDoctors] = useState(doctors);
 
 	useEffect(() => {
 		getDoctors();
 	}, []);
 
-	// const filterDoctorsByName = ({
-	// 	target: { value },
-	// }: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const filteredListDoctors = doctors.filter((doctor) =>
-	// 		doctor.name.toLocaleLowerCase().includes(value)
-	// 	);
-
-	// 	updateListNameDoctors(filteredListDoctors);
-	// };
 
 	const addCurrentDoctor = ({ ...info }: IDoctor) => {
 		dispatch(setCurrentDoctor(info));
@@ -59,13 +47,7 @@ export const DoctorsPage = () => {
 				<Heading size={'lg'}>Doctores</Heading>
 				<Text fontSize='lg'>Total de doctores: {totalDocs}</Text>
 			</Card>
-			{/* <Card>
-				<Input
-					placeholder='Buscar...'
-					width={'lg'}
-					onChange={filterDoctorsByName}
-				/>
-			</Card> */}
+	
 			{isLoading ? (
 				<Progress size='xs' isIndeterminate />
 			) : (
@@ -75,7 +57,7 @@ export const DoctorsPage = () => {
 							<Card>
 								<Heading size={'md'}>Dr.{name}</Heading>
 								<Text mb='4'>{phone}</Text>
-								<ButtonGroup>
+								<ButtonGroup justifyContent={'space-between'}>
 									<Button as={RouterLink} to={`/app/appointments?q=${_id}`}>
 										Citas
 									</Button>
