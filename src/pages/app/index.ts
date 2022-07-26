@@ -10,4 +10,5 @@ export { AddPatient } from './patients/AddPatient';
 export { CompanyPage } from './company/CompanyPage';
 
 export { DoctorsPage } from './doctors/Doctors';
+export { DoctorDetails } from './doctors/DoctorDetails'
 export { AddDoctorPage } from './doctors/AddDoctorPage';

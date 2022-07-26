@@ -1,4 +1,4 @@
-import { AddAppointment } from 'components/appointment/forms/addAppointment';
+import { AddAppointment } from 'components/appointment/forms/AddAppointment';
 import { IRoute } from 'interfaces';
 import {
 	Home,
@@ -11,6 +11,7 @@ import {
 	CompanyPage,
 	DoctorsPage,
 	AddDoctorPage,
+	DoctorDetails
 } from 'pages/app';
 import { PatientView } from 'pages/app/patients/PatientView';
 // import { lazy } from 'react';
@@ -39,6 +40,7 @@ export const privateRoutes: IRoute[] = [
 
 	{ component: CompanyPage, name: 'company-page', path: 'company' },
 	{ component: DoctorsPage, name: 'doctors-view', path: 'doctors' },
+	{ component: DoctorDetails, name: 'doctors-view', path: 'doctors/view/:id' },
 	{ component: AddDoctorPage, name: 'doctors-add', path: 'doctors/add' },
 
 ];

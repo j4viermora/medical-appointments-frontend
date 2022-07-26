@@ -1,4 +1,4 @@
-import { queryDoctors, registerDoctor } from 'api'
+import { queryDoctors, registerDoctor, updateDoctor as updateDoctorFromApi, updateDoctorProps } from 'api'
 import { useAppSelector } from 'app/hooks';
 import { setDoctors, setLoading, setMetadata } from 'features/doctors/doctorsSlice';
 import { useToast } from '@chakra-ui/react'
@@ -11,7 +11,13 @@ export const useDoctors = () => {
     const { company: { _id: companyId } } = useAppSelector(state => state.session)
     const { doctors, isLoading, metadata } = useAppSelector(state => state.doctors)
 
+    const startLoading = () => {
+        dispacth(setLoading(true))
+    }
 
+    const stopLoading = () => {
+        dispacth(setLoading(false))
+    }
 
     const getDoctors = async () => {
         dispacth(setLoading(true))
@@ -46,7 +52,17 @@ export const useDoctors = () => {
             dispacth(setLoading(false))
         }
     }
-    const updateDoctor = () => { }
+    const updateDoctor = async ({ name, phone, id }: updateDoctorProps) => {
+        startLoading()
+        try {
+            await updateDoctorFromApi({ name, phone, id })
+            toast({ title: 'Exito', status: 'success', description: 'Doctor actualizado correctamente' })
+        } catch (err: any) { console.log(err.response) } finally {
+
+            stopLoading()
+
+        }
+    }
     const deleteDoctor = () => { }
 
 

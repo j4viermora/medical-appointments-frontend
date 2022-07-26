@@ -143,3 +143,14 @@ export const registerDoctor = async ({ companyId, name, phone }: RegisterDoctors
 	const resp = appRequest.post(`/doctors/create/${companyId}`, { name, phone })
 	return resp
 }
+
+export interface updateDoctorProps {
+	id: string,
+	name: string,
+	phone: string
+}
+
+export const updateDoctor = async ({ id, name, phone }: updateDoctorProps) => {
+	const resp = appRequest.put(`/doctors/update/${id}`, { name, phone })
+	return resp
+}

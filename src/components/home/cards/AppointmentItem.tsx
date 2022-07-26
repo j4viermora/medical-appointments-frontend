@@ -1,7 +1,6 @@
 import {
 	Badge,
 	Button,
-	Center,
 	Heading,
 	Stack,
 	Text,
@@ -13,7 +12,7 @@ import {
 	ButtonGroup,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
-import { IEvent } from 'interfaces/events.interfaces';
+import { IAppointment } from 'interfaces/appointments.interfaces';
 import { DateTime } from 'luxon';
 import { DeleteIcon } from '@chakra-ui/icons';
 
@@ -26,7 +25,7 @@ export function AppointmentItem({
 	dateEvent,
 	confirmationMessageSent,
 	_id,
-}: IEvent) {
+}: IAppointment) {
 	const { name, lastName, phone, city, dni } = patient;
 	const formatDate = DateTime.fromISO(dateEvent).toFormat('DDDD');
 
