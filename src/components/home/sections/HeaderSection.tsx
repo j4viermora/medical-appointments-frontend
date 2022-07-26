@@ -3,7 +3,7 @@ import { Box, Heading, Tag, Flex, Button } from '@chakra-ui/react';
 import { useAppSelector } from 'app/hooks';
 
 export const HeaderSection = () => {
-	const { totalDocs } = useAppSelector((state) => state.events);
+	const { totalDocs } = useAppSelector((state) => state.appointments);
 
 	return (
 		<>

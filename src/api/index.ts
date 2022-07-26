@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { IListPatientsResponse, ILoginResponse } from 'interfaces';
-import { IEventsResponse } from 'interfaces/events.interfaces';
+import { IAppointmentsResponse } from 'interfaces/appointments.interfaces';
 import {
 	IPatienDataRegister,
 	IPatientUpdate,
@@ -38,9 +38,9 @@ export const getEventByCompany = async ({
 	page?: number | string;
 	doctor?: string;
 	companyId: string;
-}): Promise<AxiosResponse<IEventsResponse, any>> => {
-	const resp = appRequest.get<IEventsResponse>(
-		`/events/company/id/${companyId}`,
+}): Promise<AxiosResponse<IAppointmentsResponse, any>> => {
+	const resp = appRequest.get<IAppointmentsResponse>(
+		`/appointments/company/id/${companyId}`,
 		{
 			params: {
 				limit,

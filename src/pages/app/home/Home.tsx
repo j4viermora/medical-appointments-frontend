@@ -3,10 +3,10 @@ import { AppointmentItem } from 'components/home/cards';
 import { HeaderSection } from 'components/home/sections';
 import { FABcreateEvent } from 'components/home/buttons';
 
-import { useEvents } from 'hooks/useEvents';
+import { useAppointments } from 'hooks';
 
 export const Home = () => {
-	const { events, isLoading } = useEvents();
+	const { appointments, isLoading } = useAppointments();
 	if (isLoading) return <Progress size='xs' isIndeterminate />;
 
 	return (
@@ -21,7 +21,7 @@ export const Home = () => {
 				}}
 				gap='4'
 			>
-				{events.map((item) => (
+				{appointments.map((item) => (
 					<GridItem key={item._id}>
 						<AppointmentItem {...item} />
 					</GridItem>
