@@ -5,11 +5,23 @@ import {
 	Container,
 	Heading,
 	Button,
+	useToast,
 } from '@chakra-ui/react';
 import { Card, GoToBackButton } from 'components/shared';
+import { useFormik } from 'formik';
+import { useDoctors } from 'hooks';
 import { Helmet } from 'react-helmet';
 
 export const AddDoctorPage = () => {
+	const { addDoctor, isLoading } = useDoctors();
+
+	const { getFieldProps, handleSubmit } = useFormik({
+		initialValues: { name: '', phone: '' },
+		onSubmit: ({ name, phone }, { resetForm }) => {
+			addDoctor({ name, phone, resetForm });
+		},
+	});
+
 	return (
 		<>
 			<Helmet>
@@ -20,32 +32,25 @@ export const AddDoctorPage = () => {
 					<Heading mb='4' size={'lg'}>
 						Registrar doctor
 					</Heading>
-					<form>
+					<form onSubmit={handleSubmit}>
 						<FormControl mb='4'>
-							<FormLabel>Nombre</FormLabel>
-							<Input></Input>
-						</FormControl>
-						<FormControl mb='4'>
-							<FormLabel>Apellido</FormLabel>
-							<Input></Input>
-						</FormControl>
-						<FormControl mb='4'>
-							<FormLabel>Documento de identidad</FormLabel>
-							<Input></Input>
+							<FormLabel>Nombre y apellido</FormLabel>
+							<Input {...getFieldProps('name')} />
 						</FormControl>
 						<FormControl mb='4'>
 							<FormLabel>Telefono</FormLabel>
-							<Input></Input>
+							<Input {...getFieldProps('phone')} />
 						</FormControl>
-						<FormControl mb='4'>
-							<FormLabel>Email</FormLabel>
-							<Input></Input>
-						</FormControl>
-						<FormControl mb='4'>
+						{/* <FormControl mb='4'>
 							<FormLabel>Especialidad</FormLabel>
 							<Input></Input>
-						</FormControl>
-						<Button colorScheme={'blue'} width='full'>
+						</FormControl> */}
+						<Button
+							colorScheme={'blue'}
+							width='full'
+							type='submit'
+							isLoading={isLoading}
+						>
 							Registrar
 						</Button>
 					</form>

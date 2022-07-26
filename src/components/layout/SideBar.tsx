@@ -24,7 +24,7 @@ interface LinkItemProps {
 }
 const LinkItems: Array<LinkItemProps> = [
 	{ name: 'Inicio', icon: FiHome, to: '/app/' },
-	{ name: 'Citas', icon: AiOutlineCalendar, to: 'events' },
+	{ name: 'Citas', icon: AiOutlineCalendar, to: 'appointments' },
 	{ name: 'Pacientes', icon: AiOutlineContacts, to: 'patients' },
 	{ name: 'Doctores', icon: AiOutlineUsergroupAdd, to: 'doctors' },
 	{ name: 'Consultorio', icon: FiSettings, to: 'company' },

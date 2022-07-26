@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon, RepeatIcon } from '@chakra-ui/icons';
 import { Card } from 'components/shared';
-import { useEffect } from 'react';
 import { usePatients } from 'hooks';
 import { useSearchParams } from 'react-router-dom';
 import { useFormik } from 'formik';

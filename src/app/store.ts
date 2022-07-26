@@ -2,11 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import sessionReducer from 'features/session/sessionSlice';
 import appointmentsSlice from 'features/appointments/appointmentsSlice';
 import patientsSlice from 'features/patients/patientsSlice';
+import doctorsSlice from 'features/doctors/doctorsSlice'
+
+
 export const store = configureStore({
 	reducer: {
 		session: sessionReducer,
 		appointments: appointmentsSlice,
 		patients: patientsSlice,
+		doctors: doctorsSlice
 	},
 });
 

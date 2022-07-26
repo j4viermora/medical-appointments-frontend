@@ -1,7 +1,8 @@
 import { Box, Grid, GridItem, Progress } from '@chakra-ui/react';
+import { addAppointment } from 'components/appointment/modals/addAppointment';
 import { AppointmentItem } from 'components/home/cards';
 import { HeaderSection } from 'components/home/sections';
-import { FABcreateEvent } from 'components/home/buttons';
+import { CustomFAB } from 'components/shared';
 
 import { useAppointments } from 'hooks';
 
@@ -27,7 +28,7 @@ export const Home = () => {
 					</GridItem>
 				))}
 			</Grid>
-			<FABcreateEvent />
+			<CustomFAB onClick={addAppointment} />
 		</Box>
 	);
 };

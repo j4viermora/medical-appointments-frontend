@@ -1,5 +1,13 @@
 //Components
-import { Grid, GridItem, Heading, Text, Link, Button } from '@chakra-ui/react';
+import {
+	Grid,
+	GridItem,
+	Heading,
+	Text,
+	Link,
+	Button,
+	Box,
+} from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Comments, UpdatePatienForm } from 'components/patients';
 import { Card } from 'components/shared';
@@ -23,18 +31,6 @@ const appointments = [
 		id: '34321jklj;l',
 	},
 
-	{
-		appointentDate: 'Jueves, 30 de Junio de 2022',
-		id: '34321jklj;l',
-	},
-	{
-		appointentDate: 'Jueves, 30 de Junio de 2022',
-		id: '34321jklj;l',
-	},
-	{
-		appointentDate: 'Jueves, 30 de Junio de 2022',
-		id: '34321jklj;l',
-	},
 	{
 		appointentDate: 'Jueves, 30 de Junio de 2022',
 		id: '34321jklj;l',
@@ -77,6 +73,15 @@ export const PatientView = () => {
 			</Helmet>
 			<Grid templateColumns={{ sm: '1fr', md: '2fr 1fr' }} gap='4'>
 				<GridItem>
+					<Card>
+						<Button
+							as={RouterLink}
+							to={`/app/appointments/add/form?dni=${patient.dni}&id=${patient._id}&name=${patient.name}`}
+							colorScheme={'blue'}
+						>
+							Agendar
+						</Button>
+					</Card>
 					<UpdatePatienForm {...patient} />
 					<Comments />
 				</GridItem>

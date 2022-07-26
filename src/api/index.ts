@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { IListPatientsResponse, ILoginResponse } from 'interfaces';
-import { IAppointmentsResponse } from 'interfaces/appointments.interfaces';
+import { IAppointmentsResponse, IAppointment } from 'interfaces/appointments.interfaces';
+import { IDoctorResponse } from 'interfaces/doctors.interface';
 import {
 	IPatienDataRegister,
 	IPatientUpdate,
@@ -99,3 +100,46 @@ export const updatePatient = (id: string, { ...body }: IPatientUpdate) => {
 	const resp = appRequest.put(`/contacts/update/${id}`, { ...body });
 	return resp;
 };
+
+
+
+// appointments
+
+export const registerAppointment = async (body: IAppointment) => {
+
+	const resp = appRequest.post('/events/add', { ...body })
+	return resp
+
+}
+
+interface queryDoctorsProps {
+	companyId: string;
+	limit?: string | number,
+	page?: string | number
+}
+
+export const queryDoctors = ({ companyId, limit = 10, page = 1 }: queryDoctorsProps) => {
+
+	const resp = appRequest.get<IDoctorResponse>(`/doctors/companyId/${companyId}`, {
+
+		params: {
+			limit,
+			page
+		}
+	})
+
+
+	return resp
+
+}
+
+interface RegisterDoctorsProps {
+	companyId: string,
+	phone: string,
+	name: string
+}
+
+export const registerDoctor = async ({ companyId, name, phone }: RegisterDoctorsProps) => {
+	const resp = appRequest.post(`/doctors/create/${companyId}`, { name, phone })
+	return resp
+}
