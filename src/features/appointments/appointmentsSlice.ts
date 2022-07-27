@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IAppointment } from 'interfaces/appointments.interfaces';
+import { Appointment } from 'interfaces/appointments.interfaces';
 import { IMetadata } from 'interfaces';
 
 interface IAppointmentsStore {
-	appointments: IAppointment[] | [];
+	appointments: Appointment[] | [];
 	metadata: IMetadata;
 	isLoading: boolean;
 }
 
 interface SetAppointmentProps {
-	appointments: IAppointment[] | [];
+	appointments: Appointment[] | [];
 	metadata: IMetadata;
 }
 
